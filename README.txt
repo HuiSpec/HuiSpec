@@ -1,2 +1,3 @@
-LiWenhui
-This is a Project for GIT
+C51单片机小组
+组长：李文辉
+组员：陈希来  江敏
