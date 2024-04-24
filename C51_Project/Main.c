@@ -1,36 +1,29 @@
-/**
- * @                       .::::.
- * @                     .::::::::.
- * @                    :::::::::::
- * @                 ..:::::::::::'
- * @              '::::::::::::'
- * @                .::::::::::
- * @           '::::::::::::::..
- * @                ..::::::::::::.
- * @              ``::::::::::::::::
- * @               ::::``:::::::::'        .:::.
- * @              ::::'   ':::::'       .::::::::.
- * @            .::::'      ::::     .:::::::'::::.
- * @           .:::'       :::::  .:::::::::' ':::::.
- * @          .::'        :::::.:::::::::'      ':::::.
- * @         .::'         ::::::::::::::'         ``::::.
- * @     ...:::           ::::::::::::'              ``::.
- * @    ````':.          ':::::::::'                  ::::..
- * @                       '.:::::'                    ':'````..
- * @
- * @Author       : LiWenhui--2962896447@qq.com
- * @LastEditors  : LiWenhui--2962896447@qq.com
- * @Description  :  
- * @FilePath     : /C51/C51_Project/Main.c
- * @Version      : 0.0.1
- * @LastEditTime : 2024-04-21 22:29:15
- * @Copyright    : GuiZhouUniversity------2024.
-**/
-
-
-
-
-
+/*
+ *                        .::::.
+ *                      .::::::::.
+ *                     :::::::::::
+ *                  ..:::::::::::'
+ *               '::::::::::::'
+ *                 .::::::::::
+ *            '::::::::::::::..
+ *                 ..::::::::::::.
+ *               ``::::::::::::::::
+ *                ::::``:::::::::'        .:::.
+ *               ::::'   ':::::'       .::::::::.
+ *             .::::'      ::::     .:::::::'::::.
+ *            .:::'       :::::  .:::::::::' ':::::.
+ *           .::'        :::::.:::::::::'      ':::::.
+ *          .::'         ::::::::::::::'         ``::::.
+ *      ...:::           ::::::::::::'              ``::.
+ *     ````':.          ':::::::::'                  ::::..
+ *                        '.:::::'                    ':'````..
+ * 
+ * @Author: LiWenhui  2962896447@qq.com
+ * @Date: 2024-04-20 17:54:16
+ * @LastEditors: userName userEmail
+ * @LastEditTime: 2024-04-20 22:11:13
+ * @FilePath: /C51/C51_Project/Main.c
+ */
 #include "stc12.h"
 #include "MatKey.h"
 #include "Delay.h"
@@ -38,6 +31,8 @@
 #include "AT24C02.h"
 #include "Key.h"
 #include "Timer0.h"
+
+
 
 // 定义全局变量
 unsigned int K1; // 计数器（长按按键）
@@ -48,17 +43,20 @@ unsigned int PassWord_Set; // 设置的密码
 unsigned int PassWord; // 接受存储器中的密码
 unsigned int PassWord_Ent; // 输入的密码
 
+
+
 // 主函数
 void main()
 {
     // 初始化LCD和时间
+    
     LCD_Init();
     Time_Init();
     P2_2 = 1;
-    LCD_ShowString(1,1,"L:LiWenHui"); // 在LCD上显示字符串
-    LCD_ShowString(2,1,"C:ChenXiLai");
+    LCD_ShowString(1,1,"L:LWH"); // 在LCD上显示字符串
+    LCD_ShowString(2,1,"C:CXL & JM");
     // 读取EEPROM数据，判断是否需要设置密码
-    if((AT24C02_ReadByte(0) | AT24C02_ReadByte(1) << 8) != 0)
+    if((AT24C02_ReadByte(0)|AT24C02_ReadByte(1) << 8) != 0)
     {
         LCD_Init(); // 初始化LCD
         FLAG = 1; // 设置标志位为1
@@ -83,7 +81,7 @@ void main()
                     if(cont < 4)
                     {
                         PassWord_Set *= 10;
-                        PassWord_Set += Num_Mat % 10; // 更新密码值
+                        PassWord_Set += Num_Mat%10; // 更新密码值
                         cont++; // 计数加一
                         LCD_ShowNum(2,4,PassWord_Set,4); // 在LCD上显示数字
                     }
@@ -123,9 +121,8 @@ void main()
             LCD_ShowString(1,9,"DOOR:");
             LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
             LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
-            PassWord = AT24C02_ReadByte(0) | AT24C02_ReadByte(1) << 8; // 读取EEPROM中的密码
-            LCD_ShowNum(2,8,PassWord,4); //读取密码用来检测密码是否出现乱码
-            
+            LCD_ShowNum(2,8,PassWord,4);
+            PassWord = (AT24C02_ReadByte(0)|AT24C02_ReadByte(1) << 8); // 读取EEPROM中的密码
             // 判断按键值是否有效
             if(Num_Mat != 0 && Num_Mat <= 10)
             {            
@@ -133,7 +130,7 @@ void main()
                 if(cont < 4)
                 {
                     PassWord_Ent *= 10;
-                    PassWord_Ent += Num_Mat % 10; // 更新密码值
+                    PassWord_Ent += Num_Mat%10; // 更新密码值
                     cont++; // 计数加一
                     LCD_ShowNum(2,1,PassWord_Ent,4); // 在LCD上显示数字
                 }
@@ -144,20 +141,18 @@ void main()
                 // 判断输入密码是否正确
                 if(PassWord == PassWord_Ent)
                 {
-                    PassWord_Ent = 0; // 清零密码
-                    cont = 0; // 计数清零
                     LCD_ShowString(1,14,"O"); // 在LCD上显示字符串
                     LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
+                    cont = 0; // 计数清零
+                    PassWord_Ent = 0; // 清零密码
                     DelayS(2); // 延时2秒
                     LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
                 }
                 else
-                {
                     LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
                     LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
                     PassWord_Ent = 0; // 清零密码
                     cont = 0; // 计数清零
-                }
             }
             // 判断按键值
             if(Num_Mat == 12)

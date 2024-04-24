@@ -444,15 +444,15 @@ Symbol Table
     _WDT_CONTR                                                  =  0000C1 G
     _WR                                                         =  0000B6 G
  1A ___str_0                                                       000000 R
- 1A ___str_1                                                       00000B R
- 1A ___str_2                                                       000017 R
- 1A ___str_3                                                       00001E R
- 1A ___str_4                                                       000022 R
- 1A ___str_5                                                       00002A R
- 1A ___str_6                                                       000039 R
- 1A ___str_7                                                       000040 R
- 1A ___str_8                                                       000046 R
- 1A ___str_9                                                       000048 R
+ 1A ___str_1                                                       000006 R
+ 1A ___str_2                                                       000011 R
+ 1A ___str_3                                                       000018 R
+ 1A ___str_4                                                       00001C R
+ 1A ___str_5                                                       000024 R
+ 1A ___str_6                                                       000033 R
+ 1A ___str_7                                                       00003A R
+ 1A ___str_8                                                       000040 R
+ 1A ___str_9                                                       000042 R
     __divuint                                                      ****** GX
     __divuint_PARM_2                                               ****** GX
     __gptrget                                                      ****** GX
@@ -720,7 +720,7 @@ Area Table
   17 GSINIT                                     size      0   flags   20
   18 GSFINAL                                    size      3   flags   20
   19 CSEG                                       size    977   flags   20
-  1A CONST                                      size     4A   flags   20
+  1A CONST                                      size     44   flags   20
   1B XINIT                                      size      0   flags   20
   1C CABS                                       size      0   flags   28
 

@@ -597,7 +597,7 @@ __sdcc_program_startup:
 ;a                         Allocated to registers r6 r7 
 ;b                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	MatKey.h:40: void delay_mat()
+;	MatKey.h:45: void delay_mat()
 ;	-----------------------------------------
 ;	 function delay_mat
 ;	-----------------------------------------
@@ -610,11 +610,11 @@ _delay_mat:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	MatKey.h:43: for(a = 20; a > 0; a--)
+;	MatKey.h:48: for(a = 20; a > 0; a--)
 	mov	r6,#0x14
 	mov	r7,#0x00
 00105$:
-;	MatKey.h:45: for(b = 400; b > 0; b--);
+;	MatKey.h:50: for(b = 400; b > 0; b--);
 	mov	r4,#0x90
 	mov	r5,#0x01
 00104$:
@@ -629,7 +629,7 @@ _delay_mat:
 	mov	a,r2
 	orl	a,r3
 	jnz	00104$
-;	MatKey.h:43: for(a = 20; a > 0; a--)
+;	MatKey.h:48: for(a = 20; a > 0; a--)
 	mov	a,r6
 	add	a,#0xff
 	mov	r4,a
@@ -641,26 +641,26 @@ _delay_mat:
 	mov	a,r4
 	orl	a,r5
 	jnz	00105$
-;	MatKey.h:47: }
+;	MatKey.h:52: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'MatrKey'
 ;------------------------------------------------------------
 ;KeyNumber                 Allocated to registers r7 
 ;------------------------------------------------------------
-;	MatKey.h:54: unsigned char MatrKey()//列扫描
+;	MatKey.h:59: unsigned char MatrKey()//列扫描
 ;	-----------------------------------------
 ;	 function MatrKey
 ;	-----------------------------------------
 _MatrKey:
-;	MatKey.h:56: unsigned char KeyNumber = 0;
+;	MatKey.h:61: unsigned char KeyNumber = 0;
 	mov	r7,#0x00
-;	MatKey.h:58: P3 = 0xff;
+;	MatKey.h:63: P3 = 0xff;
 	mov	_P3,#0xff
-;	MatKey.h:59: P3_4 = 0;
+;	MatKey.h:64: P3_4 = 0;
 ;	assignBit
 	clr	_P3_4
-;	MatKey.h:60: if(P3_0 == 0){delay_mat();while(P3_0 == 0);delay_mat();KeyNumber = 1;}//第一行
+;	MatKey.h:65: if(P3_0 == 0){delay_mat();while(P3_0 == 0);delay_mat();KeyNumber = 1;}//第一行
 	jb	_P3_0,00105$
 	lcall	_delay_mat
 00101$:
@@ -668,7 +668,7 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x01
 00105$:
-;	MatKey.h:61: if(P3_1 == 0){delay_mat();while(P3_1 == 0);delay_mat();KeyNumber = 4;}//第二行
+;	MatKey.h:66: if(P3_1 == 0){delay_mat();while(P3_1 == 0);delay_mat();KeyNumber = 4;}//第二行
 	jb	_P3_1,00110$
 	lcall	_delay_mat
 00106$:
@@ -676,7 +676,7 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x04
 00110$:
-;	MatKey.h:62: if(P3_2 == 0){delay_mat();while(P3_2 == 0);delay_mat();KeyNumber = 7;}//第三行
+;	MatKey.h:67: if(P3_2 == 0){delay_mat();while(P3_2 == 0);delay_mat();KeyNumber = 7;}//第三行
 	jb	_P3_2,00115$
 	lcall	_delay_mat
 00111$:
@@ -684,7 +684,7 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x07
 00115$:
-;	MatKey.h:63: if(P3_3 == 0){delay_mat();while(P3_3 == 0);delay_mat();KeyNumber = 10;}//第四行
+;	MatKey.h:68: if(P3_3 == 0){delay_mat();while(P3_3 == 0);delay_mat();KeyNumber = 10;}//第四行
 	jb	_P3_3,00120$
 	lcall	_delay_mat
 00116$:
@@ -692,12 +692,12 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x0a
 00120$:
-;	MatKey.h:65: P3 = 0xff;
+;	MatKey.h:70: P3 = 0xff;
 	mov	_P3,#0xff
-;	MatKey.h:66: P3_5 = 0;
+;	MatKey.h:71: P3_5 = 0;
 ;	assignBit
 	clr	_P3_5
-;	MatKey.h:67: if(P3_0 == 0){delay_mat();while(P3_0 == 0);delay_mat();KeyNumber = 2;}
+;	MatKey.h:72: if(P3_0 == 0){delay_mat();while(P3_0 == 0);delay_mat();KeyNumber = 2;}
 	jb	_P3_0,00125$
 	lcall	_delay_mat
 00121$:
@@ -705,7 +705,7 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x02
 00125$:
-;	MatKey.h:68: if(P3_1 == 0){delay_mat();while(P3_1 == 0);delay_mat();KeyNumber = 5;}
+;	MatKey.h:73: if(P3_1 == 0){delay_mat();while(P3_1 == 0);delay_mat();KeyNumber = 5;}
 	jb	_P3_1,00130$
 	lcall	_delay_mat
 00126$:
@@ -713,7 +713,7 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x05
 00130$:
-;	MatKey.h:69: if(P3_2 == 0){delay_mat();while(P3_2 == 0);delay_mat();KeyNumber = 8;}
+;	MatKey.h:74: if(P3_2 == 0){delay_mat();while(P3_2 == 0);delay_mat();KeyNumber = 8;}
 	jb	_P3_2,00135$
 	lcall	_delay_mat
 00131$:
@@ -721,7 +721,7 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x08
 00135$:
-;	MatKey.h:70: if(P3_3 == 0){delay_mat();while(P3_3 == 0);delay_mat();KeyNumber = 11;}
+;	MatKey.h:75: if(P3_3 == 0){delay_mat();while(P3_3 == 0);delay_mat();KeyNumber = 11;}
 	jb	_P3_3,00140$
 	lcall	_delay_mat
 00136$:
@@ -729,12 +729,12 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x0b
 00140$:
-;	MatKey.h:72: P3 = 0xff;
+;	MatKey.h:77: P3 = 0xff;
 	mov	_P3,#0xff
-;	MatKey.h:73: P3_6 = 0;
+;	MatKey.h:78: P3_6 = 0;
 ;	assignBit
 	clr	_P3_6
-;	MatKey.h:74: if(P3_0 == 0){delay_mat();while(P3_0 == 0);delay_mat();KeyNumber = 3;}
+;	MatKey.h:79: if(P3_0 == 0){delay_mat();while(P3_0 == 0);delay_mat();KeyNumber = 3;}
 	jb	_P3_0,00145$
 	lcall	_delay_mat
 00141$:
@@ -742,7 +742,7 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x03
 00145$:
-;	MatKey.h:75: if(P3_1 == 0){delay_mat();while(P3_1 == 0);delay_mat();KeyNumber = 6;}
+;	MatKey.h:80: if(P3_1 == 0){delay_mat();while(P3_1 == 0);delay_mat();KeyNumber = 6;}
 	jb	_P3_1,00150$
 	lcall	_delay_mat
 00146$:
@@ -750,7 +750,7 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x06
 00150$:
-;	MatKey.h:76: if(P3_2 == 0){delay_mat();while(P3_2 == 0);delay_mat();KeyNumber = 9;}
+;	MatKey.h:81: if(P3_2 == 0){delay_mat();while(P3_2 == 0);delay_mat();KeyNumber = 9;}
 	jb	_P3_2,00155$
 	lcall	_delay_mat
 00151$:
@@ -758,7 +758,7 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x09
 00155$:
-;	MatKey.h:77: if(P3_3 == 0){delay_mat();while(P3_3 == 0);delay_mat();KeyNumber = 12;}
+;	MatKey.h:82: if(P3_3 == 0){delay_mat();while(P3_3 == 0);delay_mat();KeyNumber = 12;}
 	jb	_P3_3,00160$
 	lcall	_delay_mat
 00156$:
@@ -766,12 +766,12 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x0c
 00160$:
-;	MatKey.h:79: P3 = 0xff;
+;	MatKey.h:84: P3 = 0xff;
 	mov	_P3,#0xff
-;	MatKey.h:80: P3_7 = 0;
+;	MatKey.h:85: P3_7 = 0;
 ;	assignBit
 	clr	_P3_7
-;	MatKey.h:81: if(P3_0 == 0){delay_mat();while(P3_0 == 0);delay_mat();KeyNumber = 13;}
+;	MatKey.h:86: if(P3_0 == 0){delay_mat();while(P3_0 == 0);delay_mat();KeyNumber = 13;}
 	jb	_P3_0,00165$
 	lcall	_delay_mat
 00161$:
@@ -779,7 +779,7 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x0d
 00165$:
-;	MatKey.h:82: if(P3_1 == 0){delay_mat();while(P3_1 == 0);delay_mat();KeyNumber = 14;}
+;	MatKey.h:87: if(P3_1 == 0){delay_mat();while(P3_1 == 0);delay_mat();KeyNumber = 14;}
 	jb	_P3_1,00170$
 	lcall	_delay_mat
 00166$:
@@ -787,7 +787,7 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x0e
 00170$:
-;	MatKey.h:83: if(P3_2 == 0){delay_mat();while(P3_2 == 0);delay_mat();KeyNumber = 15;}
+;	MatKey.h:88: if(P3_2 == 0){delay_mat();while(P3_2 == 0);delay_mat();KeyNumber = 15;}
 	jb	_P3_2,00175$
 	lcall	_delay_mat
 00171$:
@@ -795,7 +795,7 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x0f
 00175$:
-;	MatKey.h:84: if(P3_3 == 0){delay_mat();while(P3_3 == 0);delay_mat();KeyNumber = 16;}
+;	MatKey.h:89: if(P3_3 == 0){delay_mat();while(P3_3 == 0);delay_mat();KeyNumber = 16;}
 	jb	_P3_3,00180$
 	lcall	_delay_mat
 00176$:
@@ -803,9 +803,9 @@ _MatrKey:
 	lcall	_delay_mat
 	mov	r7,#0x10
 00180$:
-;	MatKey.h:86: return KeyNumber;
+;	MatKey.h:91: return KeyNumber;
 	mov	dpl,r7
-;	MatKey.h:87: }
+;	MatKey.h:92: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'Delay'
@@ -813,16 +813,16 @@ _MatrKey:
 ;a                         Allocated to registers r6 r7 
 ;b                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	Delay.h:43: void Delay()
+;	Delay.h:49: void Delay()
 ;	-----------------------------------------
 ;	 function Delay
 ;	-----------------------------------------
 _Delay:
-;	Delay.h:46: for(a = 20; a > 0; a--)
+;	Delay.h:52: for(a = 20; a > 0; a--)
 	mov	r6,#0x14
 	mov	r7,#0x00
 00105$:
-;	Delay.h:48: for(b = 400; b > 0; b--);
+;	Delay.h:54: for(b = 400; b > 0; b--);
 	mov	r4,#0x90
 	mov	r5,#0x01
 00104$:
@@ -837,7 +837,7 @@ _Delay:
 	mov	a,r2
 	orl	a,r3
 	jnz	00104$
-;	Delay.h:46: for(a = 20; a > 0; a--)
+;	Delay.h:52: for(a = 20; a > 0; a--)
 	mov	a,r6
 	add	a,#0xff
 	mov	r4,a
@@ -849,7 +849,7 @@ _Delay:
 	mov	a,r4
 	orl	a,r5
 	jnz	00105$
-;	Delay.h:50: }
+;	Delay.h:56: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'DelayS'
@@ -858,14 +858,14 @@ _Delay:
 ;a                         Allocated to registers 
 ;b                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	Delay.h:57: void DelayS(unsigned int s)
+;	Delay.h:63: void DelayS(unsigned int s)
 ;	-----------------------------------------
 ;	 function DelayS
 ;	-----------------------------------------
 _DelayS:
 	mov	__mulint_PARM_2,dpl
 	mov	(__mulint_PARM_2 + 1),dph
-;	Delay.h:60: for(a = 1000*s; a > 0; a--)
+;	Delay.h:66: for(a = 1000*s; a > 0; a--)
 	mov	dptr,#0x03e8
 	lcall	__mulint
 	mov	r6,dpl
@@ -874,7 +874,7 @@ _DelayS:
 	mov	a,r6
 	orl	a,r7
 	jz	00108$
-;	Delay.h:62: for(b = 400; b > 0; b--);
+;	Delay.h:68: for(b = 400; b > 0; b--);
 	mov	r4,#0x90
 	mov	r5,#0x01
 00104$:
@@ -889,14 +889,14 @@ _DelayS:
 	mov	a,r2
 	orl	a,r3
 	jnz	00104$
-;	Delay.h:60: for(a = 1000*s; a > 0; a--)
+;	Delay.h:66: for(a = 1000*s; a > 0; a--)
 	dec	r6
 	cjne	r6,#0xff,00133$
 	dec	r7
 00133$:
 	sjmp	00106$
 00108$:
-;	Delay.h:64: }
+;	Delay.h:70: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'DelayMs'
@@ -905,19 +905,19 @@ _DelayS:
 ;a                         Allocated to registers r6 r7 
 ;b                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	Delay.h:71: void DelayMs(int ms)
+;	Delay.h:77: void DelayMs(int ms)
 ;	-----------------------------------------
 ;	 function DelayMs
 ;	-----------------------------------------
 _DelayMs:
 	mov	r6,dpl
 	mov	r7,dph
-;	Delay.h:74: for(a = ms; a > 0; a--)
+;	Delay.h:80: for(a = ms; a > 0; a--)
 00106$:
 	mov	a,r6
 	orl	a,r7
 	jz	00108$
-;	Delay.h:76: for(b = 400; b > 0; b--);
+;	Delay.h:82: for(b = 400; b > 0; b--);
 	mov	r4,#0x90
 	mov	r5,#0x01
 00104$:
@@ -932,14 +932,14 @@ _DelayMs:
 	mov	a,r2
 	orl	a,r3
 	jnz	00104$
-;	Delay.h:74: for(a = ms; a > 0; a--)
+;	Delay.h:80: for(a = ms; a > 0; a--)
 	dec	r6
 	cjne	r6,#0xff,00133$
 	dec	r7
 00133$:
 	sjmp	00106$
 00108$:
-;	Delay.h:78: }
+;	Delay.h:84: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_Delay'
@@ -947,110 +947,110 @@ _DelayMs:
 ;i                         Allocated to registers r7 
 ;j                         Allocated to registers r6 
 ;------------------------------------------------------------
-;	Lcd.h:53: void LCD_Delay()		//@11.0592MHz 1ms
+;	Lcd.h:59: void LCD_Delay()		//@11.0592MHz 1ms
 ;	-----------------------------------------
 ;	 function LCD_Delay
 ;	-----------------------------------------
 _LCD_Delay:
-;	Lcd.h:57: i = 2;
+;	Lcd.h:63: i = 2;
 	mov	r7,#0x02
-;	Lcd.h:58: j = 239;
+;	Lcd.h:64: j = 239;
 	mov	r6,#0xef
-;	Lcd.h:61: while (--j);
+;	Lcd.h:67: while (--j);
 00101$:
 	mov	a,r6
 	dec	a
 	mov	r5,a
 	mov	r6,a
 	jnz	00101$
-;	Lcd.h:62: } while (--i);
+;	Lcd.h:68: } while (--i);
 	mov	a,r7
 	dec	a
 	mov	r5,a
 	mov	r7,a
 	jnz	00101$
-;	Lcd.h:63: }
+;	Lcd.h:69: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_WriteCommand'
 ;------------------------------------------------------------
 ;Command                   Allocated to registers r7 
 ;------------------------------------------------------------
-;	Lcd.h:70: void LCD_WriteCommand(unsigned char Command)
+;	Lcd.h:76: void LCD_WriteCommand(unsigned char Command)
 ;	-----------------------------------------
 ;	 function LCD_WriteCommand
 ;	-----------------------------------------
 _LCD_WriteCommand:
 	mov	r7,dpl
-;	Lcd.h:72: P1_0=0;
+;	Lcd.h:78: P1_0=0;
 ;	assignBit
 	clr	_P1_0
-;	Lcd.h:73: P1_1=0;
+;	Lcd.h:79: P1_1=0;
 ;	assignBit
 	clr	_P1_1
-;	Lcd.h:74: P0=Command;
+;	Lcd.h:80: P0=Command;
 	mov	_P0,r7
-;	Lcd.h:75: P2_5=1;
+;	Lcd.h:81: P2_5=1;
 ;	assignBit
 	setb	_P2_5
-;	Lcd.h:76: LCD_Delay();
+;	Lcd.h:82: LCD_Delay();
 	lcall	_LCD_Delay
-;	Lcd.h:77: P2_5=0;
+;	Lcd.h:83: P2_5=0;
 ;	assignBit
 	clr	_P2_5
-;	Lcd.h:78: LCD_Delay();
-;	Lcd.h:79: }
+;	Lcd.h:84: LCD_Delay();
+;	Lcd.h:85: }
 	ljmp	_LCD_Delay
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_WriteData'
 ;------------------------------------------------------------
 ;Data                      Allocated to registers r7 
 ;------------------------------------------------------------
-;	Lcd.h:86: void LCD_WriteData(unsigned char Data)
+;	Lcd.h:92: void LCD_WriteData(unsigned char Data)
 ;	-----------------------------------------
 ;	 function LCD_WriteData
 ;	-----------------------------------------
 _LCD_WriteData:
 	mov	r7,dpl
-;	Lcd.h:88: P1_0=1;
+;	Lcd.h:94: P1_0=1;
 ;	assignBit
 	setb	_P1_0
-;	Lcd.h:89: P1_1=0;
+;	Lcd.h:95: P1_1=0;
 ;	assignBit
 	clr	_P1_1
-;	Lcd.h:90: P0=Data;
+;	Lcd.h:96: P0=Data;
 	mov	_P0,r7
-;	Lcd.h:91: P2_5=1;
+;	Lcd.h:97: P2_5=1;
 ;	assignBit
 	setb	_P2_5
-;	Lcd.h:92: LCD_Delay();
+;	Lcd.h:98: LCD_Delay();
 	lcall	_LCD_Delay
-;	Lcd.h:93: P2_5=0;
+;	Lcd.h:99: P2_5=0;
 ;	assignBit
 	clr	_P2_5
-;	Lcd.h:94: LCD_Delay();
-;	Lcd.h:95: }
+;	Lcd.h:100: LCD_Delay();
+;	Lcd.h:101: }
 	ljmp	_LCD_Delay
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_Init'
 ;------------------------------------------------------------
-;	Lcd.h:102: void LCD_Init(void)
+;	Lcd.h:108: void LCD_Init(void)
 ;	-----------------------------------------
 ;	 function LCD_Init
 ;	-----------------------------------------
 _LCD_Init:
-;	Lcd.h:104: LCD_WriteCommand(0x38);
+;	Lcd.h:110: LCD_WriteCommand(0x38);
 	mov	dpl,#0x38
 	lcall	_LCD_WriteCommand
-;	Lcd.h:105: LCD_WriteCommand(0x0C);
+;	Lcd.h:111: LCD_WriteCommand(0x0C);
 	mov	dpl,#0x0c
 	lcall	_LCD_WriteCommand
-;	Lcd.h:106: LCD_WriteCommand(0x06);
+;	Lcd.h:112: LCD_WriteCommand(0x06);
 	mov	dpl,#0x06
 	lcall	_LCD_WriteCommand
-;	Lcd.h:107: LCD_WriteCommand(0x01);
+;	Lcd.h:113: LCD_WriteCommand(0x01);
 	mov	dpl,#0x01
-;	Lcd.h:108: }
+;	Lcd.h:114: }
 	ljmp	_LCD_WriteCommand
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_SetCursor'
@@ -1058,15 +1058,15 @@ _LCD_Init:
 ;Column                    Allocated with name '_LCD_SetCursor_PARM_2'
 ;Line                      Allocated to registers r7 
 ;------------------------------------------------------------
-;	Lcd.h:116: void LCD_SetCursor(unsigned char Line,unsigned char Column)
+;	Lcd.h:122: void LCD_SetCursor(unsigned char Line,unsigned char Column)
 ;	-----------------------------------------
 ;	 function LCD_SetCursor
 ;	-----------------------------------------
 _LCD_SetCursor:
 	mov	r7,dpl
-;	Lcd.h:118: if(Line==1)
+;	Lcd.h:124: if(Line==1)
 	cjne	r7,#0x01,00102$
-;	Lcd.h:120: LCD_WriteCommand(0x80|(Column-1));
+;	Lcd.h:126: LCD_WriteCommand(0x80|(Column-1));
 	mov	r7,_LCD_SetCursor_PARM_2
 	dec	r7
 	mov	a,#0x80
@@ -1074,7 +1074,7 @@ _LCD_SetCursor:
 	mov	dpl,a
 	ljmp	_LCD_WriteCommand
 00102$:
-;	Lcd.h:124: LCD_WriteCommand(0x80|(Column-1)+0x40);
+;	Lcd.h:130: LCD_WriteCommand(0x80|(Column-1)+0x40);
 	mov	r7,_LCD_SetCursor_PARM_2
 	mov	a,#0x3f
 	add	a,r7
@@ -1082,7 +1082,7 @@ _LCD_SetCursor:
 	mov	a,#0x80
 	orl	a,r7
 	mov	dpl,a
-;	Lcd.h:126: }
+;	Lcd.h:132: }
 	ljmp	_LCD_WriteCommand
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_ShowChar'
@@ -1091,17 +1091,17 @@ _LCD_SetCursor:
 ;Char                      Allocated with name '_LCD_ShowChar_PARM_3'
 ;Line                      Allocated to registers 
 ;------------------------------------------------------------
-;	Lcd.h:135: void LCD_ShowChar(unsigned char Line,unsigned char Column,unsigned char Char)
+;	Lcd.h:141: void LCD_ShowChar(unsigned char Line,unsigned char Column,unsigned char Char)
 ;	-----------------------------------------
 ;	 function LCD_ShowChar
 ;	-----------------------------------------
 _LCD_ShowChar:
-;	Lcd.h:137: LCD_SetCursor(Line,Column);
+;	Lcd.h:143: LCD_SetCursor(Line,Column);
 	mov	_LCD_SetCursor_PARM_2,_LCD_ShowChar_PARM_2
 	lcall	_LCD_SetCursor
-;	Lcd.h:138: LCD_WriteData(Char);
+;	Lcd.h:144: LCD_WriteData(Char);
 	mov	dpl,_LCD_ShowChar_PARM_3
-;	Lcd.h:139: }
+;	Lcd.h:145: }
 	ljmp	_LCD_WriteData
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_ShowString'
@@ -1111,15 +1111,15 @@ _LCD_ShowChar:
 ;Line                      Allocated to registers 
 ;i                         Allocated to registers r7 
 ;------------------------------------------------------------
-;	Lcd.h:148: void LCD_ShowString(unsigned char Line,unsigned char Column,unsigned char *String)
+;	Lcd.h:154: void LCD_ShowString(unsigned char Line,unsigned char Column,unsigned char *String)
 ;	-----------------------------------------
 ;	 function LCD_ShowString
 ;	-----------------------------------------
 _LCD_ShowString:
-;	Lcd.h:151: LCD_SetCursor(Line,Column);
+;	Lcd.h:157: LCD_SetCursor(Line,Column);
 	mov	_LCD_SetCursor_PARM_2,_LCD_ShowString_PARM_2
 	lcall	_LCD_SetCursor
-;	Lcd.h:152: for(i=0;String[i]!='\0';i++)
+;	Lcd.h:158: for(i=0;String[i]!='\0';i++)
 	mov	r7,#0x00
 00103$:
 	mov	a,r7
@@ -1135,16 +1135,16 @@ _LCD_ShowString:
 	lcall	__gptrget
 	mov	r6,a
 	jz	00105$
-;	Lcd.h:154: LCD_WriteData(String[i]);
+;	Lcd.h:160: LCD_WriteData(String[i]);
 	mov	dpl,r6
 	push	ar7
 	lcall	_LCD_WriteData
 	pop	ar7
-;	Lcd.h:152: for(i=0;String[i]!='\0';i++)
+;	Lcd.h:158: for(i=0;String[i]!='\0';i++)
 	inc	r7
 	sjmp	00103$
 00105$:
-;	Lcd.h:156: }
+;	Lcd.h:162: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_Pow'
@@ -1154,17 +1154,17 @@ _LCD_ShowString:
 ;i                         Allocated to registers r3 
 ;Result                    Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	Lcd.h:161: int LCD_Pow(int X,int Y)
+;	Lcd.h:167: int LCD_Pow(int X,int Y)
 ;	-----------------------------------------
 ;	 function LCD_Pow
 ;	-----------------------------------------
 _LCD_Pow:
 	mov	r6,dpl
 	mov	r7,dph
-;	Lcd.h:164: int Result=1;
+;	Lcd.h:170: int Result=1;
 	mov	r4,#0x01
 	mov	r5,#0x00
-;	Lcd.h:165: for(i=0;i<Y;i++)
+;	Lcd.h:171: for(i=0;i<Y;i++)
 	mov	r3,#0x00
 00103$:
 	mov	ar1,r3
@@ -1178,7 +1178,7 @@ _LCD_Pow:
 	xrl	b,#0x80
 	subb	a,b
 	jnc	00101$
-;	Lcd.h:167: Result*=X;
+;	Lcd.h:173: Result*=X;
 	mov	__mulint_PARM_2,r6
 	mov	(__mulint_PARM_2 + 1),r7
 	mov	dpl,r4
@@ -1192,14 +1192,14 @@ _LCD_Pow:
 	pop	ar3
 	pop	ar6
 	pop	ar7
-;	Lcd.h:165: for(i=0;i<Y;i++)
+;	Lcd.h:171: for(i=0;i<Y;i++)
 	inc	r3
 	sjmp	00103$
 00101$:
-;	Lcd.h:169: return Result;
+;	Lcd.h:175: return Result;
 	mov	dpl,r4
 	mov	dph,r5
-;	Lcd.h:170: }
+;	Lcd.h:176: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_ShowNum'
@@ -1210,20 +1210,20 @@ _LCD_Pow:
 ;Line                      Allocated to registers 
 ;i                         Allocated to registers 
 ;------------------------------------------------------------
-;	Lcd.h:180: void LCD_ShowNum(unsigned char Line,unsigned char Column,unsigned int Number,unsigned char Length)
+;	Lcd.h:186: void LCD_ShowNum(unsigned char Line,unsigned char Column,unsigned int Number,unsigned char Length)
 ;	-----------------------------------------
 ;	 function LCD_ShowNum
 ;	-----------------------------------------
 _LCD_ShowNum:
-;	Lcd.h:183: LCD_SetCursor(Line,Column);
+;	Lcd.h:189: LCD_SetCursor(Line,Column);
 	mov	_LCD_SetCursor_PARM_2,_LCD_ShowNum_PARM_2
 	lcall	_LCD_SetCursor
-;	Lcd.h:184: for(i=Length;i>0;i--)
+;	Lcd.h:190: for(i=Length;i>0;i--)
 	mov	r7,_LCD_ShowNum_PARM_4
 00103$:
 	mov	a,r7
 	jz	00105$
-;	Lcd.h:186: LCD_WriteData('0'+Number/LCD_Pow(10,i-1)%10);
+;	Lcd.h:192: LCD_WriteData('0'+Number/LCD_Pow(10,i-1)%10);
 	mov	ar5,r7
 	mov	r6,#0x00
 	mov	a,r5
@@ -1251,11 +1251,11 @@ _LCD_ShowNum:
 	mov	dpl,a
 	lcall	_LCD_WriteData
 	pop	ar7
-;	Lcd.h:184: for(i=Length;i>0;i--)
+;	Lcd.h:190: for(i=Length;i>0;i--)
 	dec	r7
 	sjmp	00103$
 00105$:
-;	Lcd.h:188: }
+;	Lcd.h:194: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_ShowSignedNum'
@@ -1267,29 +1267,29 @@ _LCD_ShowNum:
 ;i                         Allocated to registers 
 ;Number1                   Allocated to registers r6 r7 
 ;------------------------------------------------------------
-;	Lcd.h:198: void LCD_ShowSignedNum(unsigned char Line,unsigned char Column,int Number,unsigned char Length)
+;	Lcd.h:204: void LCD_ShowSignedNum(unsigned char Line,unsigned char Column,int Number,unsigned char Length)
 ;	-----------------------------------------
 ;	 function LCD_ShowSignedNum
 ;	-----------------------------------------
 _LCD_ShowSignedNum:
-;	Lcd.h:202: LCD_SetCursor(Line,Column);
+;	Lcd.h:208: LCD_SetCursor(Line,Column);
 	mov	_LCD_SetCursor_PARM_2,_LCD_ShowSignedNum_PARM_2
 	lcall	_LCD_SetCursor
-;	Lcd.h:203: if(Number>=0)
+;	Lcd.h:209: if(Number>=0)
 	mov	a,(_LCD_ShowSignedNum_PARM_3 + 1)
 	jb	acc.7,00102$
-;	Lcd.h:205: LCD_WriteData('+');
+;	Lcd.h:211: LCD_WriteData('+');
 	mov	dpl,#0x2b
 	lcall	_LCD_WriteData
-;	Lcd.h:206: Number1=Number;
+;	Lcd.h:212: Number1=Number;
 	mov	r6,_LCD_ShowSignedNum_PARM_3
 	mov	r7,(_LCD_ShowSignedNum_PARM_3 + 1)
 	sjmp	00103$
 00102$:
-;	Lcd.h:210: LCD_WriteData('-');
+;	Lcd.h:216: LCD_WriteData('-');
 	mov	dpl,#0x2d
 	lcall	_LCD_WriteData
-;	Lcd.h:211: Number1=-Number;
+;	Lcd.h:217: Number1=-Number;
 	clr	c
 	clr	a
 	subb	a,_LCD_ShowSignedNum_PARM_3
@@ -1298,12 +1298,12 @@ _LCD_ShowSignedNum:
 	subb	a,(_LCD_ShowSignedNum_PARM_3 + 1)
 	mov	r7,a
 00103$:
-;	Lcd.h:213: for(i=Length;i>0;i--)
+;	Lcd.h:219: for(i=Length;i>0;i--)
 	mov	r5,_LCD_ShowSignedNum_PARM_4
 00106$:
 	mov	a,r5
 	jz	00108$
-;	Lcd.h:215: LCD_WriteData('0'+Number1/LCD_Pow(10,i-1)%10);
+;	Lcd.h:221: LCD_WriteData('0'+Number1/LCD_Pow(10,i-1)%10);
 	mov	ar3,r5
 	mov	r4,#0x00
 	mov	a,r3
@@ -1341,11 +1341,11 @@ _LCD_ShowSignedNum:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	Lcd.h:213: for(i=Length;i>0;i--)
+;	Lcd.h:219: for(i=Length;i>0;i--)
 	dec	r5
 	sjmp	00106$
 00108$:
-;	Lcd.h:217: }
+;	Lcd.h:223: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_ShowHexNum'
@@ -1357,20 +1357,20 @@ _LCD_ShowSignedNum:
 ;i                         Allocated to registers 
 ;SingleNumber              Allocated to registers r5 
 ;------------------------------------------------------------
-;	Lcd.h:227: void LCD_ShowHexNum(unsigned char Line,unsigned char Column,unsigned int Number,unsigned char Length)
+;	Lcd.h:233: void LCD_ShowHexNum(unsigned char Line,unsigned char Column,unsigned int Number,unsigned char Length)
 ;	-----------------------------------------
 ;	 function LCD_ShowHexNum
 ;	-----------------------------------------
 _LCD_ShowHexNum:
-;	Lcd.h:231: LCD_SetCursor(Line,Column);
+;	Lcd.h:237: LCD_SetCursor(Line,Column);
 	mov	_LCD_SetCursor_PARM_2,_LCD_ShowHexNum_PARM_2
 	lcall	_LCD_SetCursor
-;	Lcd.h:232: for(i=Length;i>0;i--)
+;	Lcd.h:238: for(i=Length;i>0;i--)
 	mov	r7,_LCD_ShowHexNum_PARM_4
 00106$:
 	mov	a,r7
 	jz	00108$
-;	Lcd.h:234: SingleNumber=Number/LCD_Pow(16,i-1)%16;
+;	Lcd.h:240: SingleNumber=Number/LCD_Pow(16,i-1)%16;
 	mov	ar5,r7
 	mov	r6,#0x00
 	mov	a,r5
@@ -1394,11 +1394,11 @@ _LCD_ShowHexNum:
 	pop	ar7
 	anl	a,#0x0f
 	mov	r5,a
-;	Lcd.h:235: if(SingleNumber<10)
+;	Lcd.h:241: if(SingleNumber<10)
 	cjne	r5,#0x0a,00126$
 00126$:
 	jnc	00102$
-;	Lcd.h:237: LCD_WriteData('0'+SingleNumber);
+;	Lcd.h:243: LCD_WriteData('0'+SingleNumber);
 	mov	ar6,r5
 	mov	a,#0x30
 	add	a,r6
@@ -1408,7 +1408,7 @@ _LCD_ShowHexNum:
 	pop	ar7
 	sjmp	00107$
 00102$:
-;	Lcd.h:241: LCD_WriteData('A'+SingleNumber-10);
+;	Lcd.h:247: LCD_WriteData('A'+SingleNumber-10);
 	mov	a,#0x37
 	add	a,r5
 	mov	dpl,a
@@ -1416,11 +1416,11 @@ _LCD_ShowHexNum:
 	lcall	_LCD_WriteData
 	pop	ar7
 00107$:
-;	Lcd.h:232: for(i=Length;i>0;i--)
+;	Lcd.h:238: for(i=Length;i>0;i--)
 	dec	r7
 	sjmp	00106$
 00108$:
-;	Lcd.h:244: }
+;	Lcd.h:250: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_ShowBinNum'
@@ -1431,20 +1431,20 @@ _LCD_ShowHexNum:
 ;Line                      Allocated to registers 
 ;i                         Allocated to registers 
 ;------------------------------------------------------------
-;	Lcd.h:254: void LCD_ShowBinNum(unsigned char Line,unsigned char Column,unsigned int Number,unsigned char Length)
+;	Lcd.h:260: void LCD_ShowBinNum(unsigned char Line,unsigned char Column,unsigned int Number,unsigned char Length)
 ;	-----------------------------------------
 ;	 function LCD_ShowBinNum
 ;	-----------------------------------------
 _LCD_ShowBinNum:
-;	Lcd.h:257: LCD_SetCursor(Line,Column);
+;	Lcd.h:263: LCD_SetCursor(Line,Column);
 	mov	_LCD_SetCursor_PARM_2,_LCD_ShowBinNum_PARM_2
 	lcall	_LCD_SetCursor
-;	Lcd.h:258: for(i=Length;i>0;i--)
+;	Lcd.h:264: for(i=Length;i>0;i--)
 	mov	r7,_LCD_ShowBinNum_PARM_4
 00103$:
 	mov	a,r7
 	jz	00105$
-;	Lcd.h:260: LCD_WriteData('0'+Number/LCD_Pow(2,i-1)%2);
+;	Lcd.h:266: LCD_WriteData('0'+Number/LCD_Pow(2,i-1)%2);
 	mov	ar5,r7
 	mov	r6,#0x00
 	mov	a,r5
@@ -1470,52 +1470,52 @@ _LCD_ShowBinNum:
 	mov	dpl,a
 	lcall	_LCD_WriteData
 	pop	ar7
-;	Lcd.h:258: for(i=Length;i>0;i--)
+;	Lcd.h:264: for(i=Length;i>0;i--)
 	dec	r7
 	sjmp	00103$
 00105$:
-;	Lcd.h:262: }
+;	Lcd.h:268: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'I2C_Start'
 ;------------------------------------------------------------
-;	I2C.h:45: void I2C_Start(void)
+;	I2C.h:49: void I2C_Start(void)
 ;	-----------------------------------------
 ;	 function I2C_Start
 ;	-----------------------------------------
 _I2C_Start:
-;	I2C.h:47: I2C_SDA = 1;  // 设置数据线为高电平
+;	I2C.h:51: I2C_SDA = 1;  // 设置数据线为高电平
 ;	assignBit
 	setb	_P1_2
-;	I2C.h:48: I2C_SCL = 1;  // 设置时钟线为高电平
+;	I2C.h:52: I2C_SCL = 1;  // 设置时钟线为高电平
 ;	assignBit
 	setb	_P1_7
-;	I2C.h:50: I2C_SDA = 0;  // 设置数据线为低电平（启动信号）
+;	I2C.h:54: I2C_SDA = 0;  // 设置数据线为低电平（启动信号）
 ;	assignBit
 	clr	_P1_2
-;	I2C.h:51: I2C_SCL = 0;  // 设置时钟线为低电平
+;	I2C.h:55: I2C_SCL = 0;  // 设置时钟线为低电平
 ;	assignBit
 	clr	_P1_7
-;	I2C.h:52: }
+;	I2C.h:56: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'I2C_Stop'
 ;------------------------------------------------------------
-;	I2C.h:57: void I2C_Stop(void)
+;	I2C.h:61: void I2C_Stop(void)
 ;	-----------------------------------------
 ;	 function I2C_Stop
 ;	-----------------------------------------
 _I2C_Stop:
-;	I2C.h:59: I2C_SDA = 0;  // 设置数据线为低电平
+;	I2C.h:63: I2C_SDA = 0;  // 设置数据线为低电平
 ;	assignBit
 	clr	_P1_2
-;	I2C.h:60: I2C_SCL = 1;  // 设置时钟线为高电平
+;	I2C.h:64: I2C_SCL = 1;  // 设置时钟线为高电平
 ;	assignBit
 	setb	_P1_7
-;	I2C.h:61: I2C_SDA = 1;  // 设置数据线为高电平（停止信号）
+;	I2C.h:65: I2C_SDA = 1;  // 设置数据线为高电平（停止信号）
 ;	assignBit
 	setb	_P1_2
-;	I2C.h:62: }
+;	I2C.h:66: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'I2C_SendByte'
@@ -1523,16 +1523,16 @@ _I2C_Stop:
 ;Byte                      Allocated to registers r7 
 ;i                         Allocated to registers r6 
 ;------------------------------------------------------------
-;	I2C.h:67: void I2C_SendByte(unsigned char Byte)
+;	I2C.h:71: void I2C_SendByte(unsigned char Byte)
 ;	-----------------------------------------
 ;	 function I2C_SendByte
 ;	-----------------------------------------
 _I2C_SendByte:
 	mov	r7,dpl
-;	I2C.h:70: for(i=0; i<8; i++)
+;	I2C.h:74: for(i=0; i<8; i++)
 	mov	r6,#0x00
 00102$:
-;	I2C.h:72: I2C_SDA = Byte & (0x80 >> i);  // 根据字节的每一位数据设置数据线
+;	I2C.h:76: I2C_SDA = Byte & (0x80 >> i);  // 根据字节的每一位数据设置数据线
 	mov	b,r6
 	inc	b
 	mov	r4,#0x80
@@ -1562,18 +1562,18 @@ _I2C_SendByte:
 	orl	a,r5
 	add	a,#0xff
 	mov	_P1_2,c
-;	I2C.h:73: I2C_SCL = 1;  // 设置时钟线为高电平（数据线稳定）
+;	I2C.h:77: I2C_SCL = 1;  // 设置时钟线为高电平（数据线稳定）
 ;	assignBit
 	setb	_P1_7
-;	I2C.h:74: I2C_SCL = 0;  // 设置时钟线为低电平
+;	I2C.h:78: I2C_SCL = 0;  // 设置时钟线为低电平
 ;	assignBit
 	clr	_P1_7
-;	I2C.h:70: for(i=0; i<8; i++)
+;	I2C.h:74: for(i=0; i<8; i++)
 	inc	r6
 	cjne	r6,#0x08,00113$
 00113$:
 	jc	00102$
-;	I2C.h:76: }
+;	I2C.h:80: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'I2C_ReciveByte'
@@ -1581,23 +1581,23 @@ _I2C_SendByte:
 ;i                         Allocated to registers r6 
 ;Byte                      Allocated to registers r7 
 ;------------------------------------------------------------
-;	I2C.h:81: unsigned char I2C_ReciveByte(void)
+;	I2C.h:85: unsigned char I2C_ReciveByte(void)
 ;	-----------------------------------------
 ;	 function I2C_ReciveByte
 ;	-----------------------------------------
 _I2C_ReciveByte:
-;	I2C.h:83: unsigned char i, Byte = 0x00;
+;	I2C.h:87: unsigned char i, Byte = 0x00;
 	mov	r7,#0x00
-;	I2C.h:84: I2C_SDA = 1;  // 设置数据线为高电平
+;	I2C.h:88: I2C_SDA = 1;  // 设置数据线为高电平
 ;	assignBit
 	setb	_P1_2
-;	I2C.h:85: for (i = 0; i < 8; i++)
+;	I2C.h:89: for (i = 0; i < 8; i++)
 	mov	r6,#0x00
 00104$:
-;	I2C.h:87: I2C_SCL = 1;  // 设置时钟线为高电平（接收数据）
+;	I2C.h:91: I2C_SCL = 1;  // 设置时钟线为高电平（接收数据）
 ;	assignBit
 	setb	_P1_7
-;	I2C.h:88: if(I2C_SDA){Byte |= (0x80 >> i);}  // 读取数据线的值并设置字节的对应位 
+;	I2C.h:92: if(I2C_SDA){Byte |= (0x80 >> i);}  // 读取数据线的值并设置字节的对应位 
 	jnb	_P1_2,00102$
 	mov	b,r6
 	inc	b
@@ -1620,67 +1620,67 @@ _I2C_ReciveByte:
 	mov	a,r4
 	orl	ar7,a
 00102$:
-;	I2C.h:89: I2C_SCL = 0;  // 设置时钟线为低电平
+;	I2C.h:93: I2C_SCL = 0;  // 设置时钟线为低电平
 ;	assignBit
 	clr	_P1_7
-;	I2C.h:85: for (i = 0; i < 8; i++)
+;	I2C.h:89: for (i = 0; i < 8; i++)
 	inc	r6
 	cjne	r6,#0x08,00124$
 00124$:
 	jc	00104$
-;	I2C.h:91: return Byte;
+;	I2C.h:95: return Byte;
 	mov	dpl,r7
-;	I2C.h:92: }
+;	I2C.h:96: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'I2C_SendAck'
 ;------------------------------------------------------------
 ;Ack                       Allocated to registers r7 
 ;------------------------------------------------------------
-;	I2C.h:97: void I2C_SendAck(unsigned char Ack)
+;	I2C.h:101: void I2C_SendAck(unsigned char Ack)
 ;	-----------------------------------------
 ;	 function I2C_SendAck
 ;	-----------------------------------------
 _I2C_SendAck:
-;	I2C.h:99: I2C_SDA = Ack;  // 设置数据线为应答值
+;	I2C.h:103: I2C_SDA = Ack;  // 设置数据线为应答值
 ;	assignBit
 	mov	a,dpl
 	add	a,#0xff
 	mov	_P1_2,c
-;	I2C.h:100: I2C_SCL = 1;  // 设置时钟线为高电平
+;	I2C.h:104: I2C_SCL = 1;  // 设置时钟线为高电平
 ;	assignBit
 	setb	_P1_7
-;	I2C.h:101: I2C_SCL = 0;  // 设置时钟线为低电平
+;	I2C.h:105: I2C_SCL = 0;  // 设置时钟线为低电平
 ;	assignBit
 	clr	_P1_7
-;	I2C.h:102: }
+;	I2C.h:106: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'I2C_ReciveAck'
 ;------------------------------------------------------------
 ;Ack                       Allocated to registers 
 ;------------------------------------------------------------
-;	I2C.h:107: unsigned char I2C_ReciveAck(void)
+;	I2C.h:111: unsigned char I2C_ReciveAck(void)
 ;	-----------------------------------------
 ;	 function I2C_ReciveAck
 ;	-----------------------------------------
 _I2C_ReciveAck:
-;	I2C.h:110: I2C_SDA = 1;  // 设置数据线为高电平
+;	I2C.h:114: I2C_SDA = 1;  // 设置数据线为高电平
 ;	assignBit
 	setb	_P1_2
-;	I2C.h:111: I2C_SCL = 1;  // 设置时钟线为高电平（接收应答）
+;	I2C.h:115: I2C_SCL = 1;  // 设置时钟线为高电平（接收应答）
 ;	assignBit
 	setb	_P1_7
-;	I2C.h:112: Ack = I2C_SDA;  // 读取数据线的值作为应答值
+;	I2C.h:116: Ack = I2C_SDA;  // 读取数据线的值作为应答值
 	mov	c,_P1_2
 	clr	a
 	rlc	a
 	mov	dpl,a
-;	I2C.h:113: I2C_SCL = 0;  // 设置时钟线为低电平
+;	I2C.h:117: I2C_SCL = 0;  // 设置时钟线为低电平
 ;	assignBit
 	clr	_P1_7
-;	I2C.h:114: return Ack;
-;	I2C.h:115: }
+;	I2C.h:118: return Ack;
+;	I2C.h:119: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'delay_ATC'
@@ -1688,16 +1688,16 @@ _I2C_ReciveAck:
 ;a                         Allocated to registers r6 r7 
 ;b                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	AT24C02.h:40: void delay_ATC()
+;	AT24C02.h:46: void delay_ATC()
 ;	-----------------------------------------
 ;	 function delay_ATC
 ;	-----------------------------------------
 _delay_ATC:
-;	AT24C02.h:43: for(a = 10; a > 0; a--)
+;	AT24C02.h:49: for(a = 10; a > 0; a--)
 	mov	r6,#0x0a
 	mov	r7,#0x00
 00105$:
-;	AT24C02.h:45: for(b = 400; b > 0; b--);
+;	AT24C02.h:51: for(b = 400; b > 0; b--);
 	mov	r4,#0x90
 	mov	r5,#0x01
 00104$:
@@ -1712,7 +1712,7 @@ _delay_ATC:
 	mov	a,r2
 	orl	a,r3
 	jnz	00104$
-;	AT24C02.h:43: for(a = 10; a > 0; a--)
+;	AT24C02.h:49: for(a = 10; a > 0; a--)
 	mov	a,r6
 	add	a,#0xff
 	mov	r4,a
@@ -1724,7 +1724,7 @@ _delay_ATC:
 	mov	a,r4
 	orl	a,r5
 	jnz	00105$
-;	AT24C02.h:47: }
+;	AT24C02.h:53: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'AT24C02_WriteByte'
@@ -1732,35 +1732,35 @@ _delay_ATC:
 ;data                      Allocated with name '_AT24C02_WriteByte_PARM_2'
 ;add                       Allocated to registers r7 
 ;------------------------------------------------------------
-;	AT24C02.h:52: void AT24C02_WriteByte(unsigned char add,unsigned char data)
+;	AT24C02.h:58: void AT24C02_WriteByte(unsigned char add,unsigned char data)
 ;	-----------------------------------------
 ;	 function AT24C02_WriteByte
 ;	-----------------------------------------
 _AT24C02_WriteByte:
 	mov	r7,dpl
-;	AT24C02.h:54: I2C_Start();                         // 发送起始信号
+;	AT24C02.h:60: I2C_Start();                         // 发送起始信号
 	push	ar7
 	lcall	_I2C_Start
-;	AT24C02.h:55: I2C_SendByte(AT24C02_ADDR);          // 发送EEPROM地址
+;	AT24C02.h:61: I2C_SendByte(AT24C02_ADDR);          // 发送EEPROM地址
 	mov	dpl,#0xa0
 	lcall	_I2C_SendByte
-;	AT24C02.h:56: I2C_ReciveAck();                     // 接收ACK信号
+;	AT24C02.h:62: I2C_ReciveAck();                     // 接收ACK信号
 	lcall	_I2C_ReciveAck
 	pop	ar7
-;	AT24C02.h:58: I2C_SendByte(add);                   // 发送要写入的地址
+;	AT24C02.h:64: I2C_SendByte(add);                   // 发送要写入的地址
 	mov	dpl,r7
 	lcall	_I2C_SendByte
-;	AT24C02.h:59: I2C_ReciveAck();                     // 接收ACK信号
+;	AT24C02.h:65: I2C_ReciveAck();                     // 接收ACK信号
 	lcall	_I2C_ReciveAck
-;	AT24C02.h:60: I2C_SendByte(data);                  // 发送要写入的数据
+;	AT24C02.h:66: I2C_SendByte(data);                  // 发送要写入的数据
 	mov	dpl,_AT24C02_WriteByte_PARM_2
 	lcall	_I2C_SendByte
-;	AT24C02.h:61: I2C_ReciveAck();                     // 接收ACK信号
+;	AT24C02.h:67: I2C_ReciveAck();                     // 接收ACK信号
 	lcall	_I2C_ReciveAck
-;	AT24C02.h:62: I2C_Stop();                          // 发送停止信号
+;	AT24C02.h:68: I2C_Stop();                          // 发送停止信号
 	lcall	_I2C_Stop
-;	AT24C02.h:63: delay_ATC();                         // 等待EEPROM写入完成
-;	AT24C02.h:64: }
+;	AT24C02.h:69: delay_ATC();                         // 等待EEPROM写入完成
+;	AT24C02.h:70: }
 	ljmp	_delay_ATC
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'AT24C02_ReadByte'
@@ -1768,46 +1768,46 @@ _AT24C02_WriteByte:
 ;add                       Allocated to registers r7 
 ;data                      Allocated to registers r7 
 ;------------------------------------------------------------
-;	AT24C02.h:69: unsigned char AT24C02_ReadByte(unsigned char add)
+;	AT24C02.h:75: unsigned char AT24C02_ReadByte(unsigned char add)
 ;	-----------------------------------------
 ;	 function AT24C02_ReadByte
 ;	-----------------------------------------
 _AT24C02_ReadByte:
 	mov	r7,dpl
-;	AT24C02.h:72: I2C_Start();                         // 发送起始信号
+;	AT24C02.h:78: I2C_Start();                         // 发送起始信号
 	push	ar7
 	lcall	_I2C_Start
-;	AT24C02.h:73: I2C_SendByte(AT24C02_ADDR);          // 发送EEPROM地址
+;	AT24C02.h:79: I2C_SendByte(AT24C02_ADDR);          // 发送EEPROM地址
 	mov	dpl,#0xa0
-	lcall	_I2C_SendByte
-;	AT24C02.h:74: I2C_ReciveAck();                     // 接收ACK信号
-	lcall	_I2C_ReciveAck
-	pop	ar7
-;	AT24C02.h:75: I2C_SendByte(add);                   // 发送要读取的地址
-	mov	dpl,r7
-	lcall	_I2C_SendByte
-;	AT24C02.h:76: I2C_ReciveAck();                     // 接收ACK信号
-	lcall	_I2C_ReciveAck
-;	AT24C02.h:78: I2C_Start();                         // 发送重复起始信号
-	lcall	_I2C_Start
-;	AT24C02.h:79: I2C_SendByte(AT24C02_ADDR | 0x01);   // 发送带读位的EEPROM地址
-	mov	dpl,#0xa1
 	lcall	_I2C_SendByte
 ;	AT24C02.h:80: I2C_ReciveAck();                     // 接收ACK信号
 	lcall	_I2C_ReciveAck
-;	AT24C02.h:81: data = I2C_ReciveByte();             // 读取数据
+	pop	ar7
+;	AT24C02.h:81: I2C_SendByte(add);                   // 发送要读取的地址
+	mov	dpl,r7
+	lcall	_I2C_SendByte
+;	AT24C02.h:82: I2C_ReciveAck();                     // 接收ACK信号
+	lcall	_I2C_ReciveAck
+;	AT24C02.h:84: I2C_Start();                         // 发送重复起始信号
+	lcall	_I2C_Start
+;	AT24C02.h:85: I2C_SendByte(AT24C02_ADDR | 0x01);   // 发送带读位的EEPROM地址
+	mov	dpl,#0xa1
+	lcall	_I2C_SendByte
+;	AT24C02.h:86: I2C_ReciveAck();                     // 接收ACK信号
+	lcall	_I2C_ReciveAck
+;	AT24C02.h:87: data = I2C_ReciveByte();             // 读取数据
 	lcall	_I2C_ReciveByte
 	mov	r7,dpl
-;	AT24C02.h:82: I2C_SendAck(1);                      // 发送NACK信号
+;	AT24C02.h:88: I2C_SendAck(1);                      // 发送NACK信号
 	mov	dpl,#0x01
 	push	ar7
 	lcall	_I2C_SendAck
-;	AT24C02.h:83: I2C_Stop();                          // 发送停止信号
+;	AT24C02.h:89: I2C_Stop();                          // 发送停止信号
 	lcall	_I2C_Stop
 	pop	ar7
-;	AT24C02.h:84: return data;    
+;	AT24C02.h:90: return data;    
 	mov	dpl,r7
-;	AT24C02.h:85: }
+;	AT24C02.h:91: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'delay_key'
@@ -1815,16 +1815,16 @@ _AT24C02_ReadByte:
 ;a                         Allocated to registers r6 r7 
 ;b                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	Key.h:35: void delay_key()
+;	Key.h:40: void delay_key()
 ;	-----------------------------------------
 ;	 function delay_key
 ;	-----------------------------------------
 _delay_key:
-;	Key.h:38: for(a = 10; a > 0; a--)
+;	Key.h:43: for(a = 10; a > 0; a--)
 	mov	r6,#0x0a
 	mov	r7,#0x00
 00105$:
-;	Key.h:40: for(b = 400; b > 0; b--);
+;	Key.h:45: for(b = 400; b > 0; b--);
 	mov	r4,#0x90
 	mov	r5,#0x01
 00104$:
@@ -1839,7 +1839,7 @@ _delay_key:
 	mov	a,r2
 	orl	a,r3
 	jnz	00104$
-;	Key.h:38: for(a = 10; a > 0; a--)
+;	Key.h:43: for(a = 10; a > 0; a--)
 	mov	a,r6
 	add	a,#0xff
 	mov	r4,a
@@ -1851,22 +1851,22 @@ _delay_key:
 	mov	a,r4
 	orl	a,r5
 	jnz	00105$
-;	Key.h:42: }
+;	Key.h:47: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'Key'
 ;------------------------------------------------------------
 ;KeyNum                    Allocated to registers r6 r7 
 ;------------------------------------------------------------
-;	Key.h:49: unsigned int Key()
+;	Key.h:54: unsigned int Key()
 ;	-----------------------------------------
 ;	 function Key
 ;	-----------------------------------------
 _Key:
-;	Key.h:51: unsigned int KeyNum = 0;
+;	Key.h:56: unsigned int KeyNum = 0;
 	mov	r6,#0x00
 	mov	r7,#0x00
-;	Key.h:52: if(P3_0 == 0){delay_key();while(P3_0 == 0);delay_key();KeyNum = 1;}
+;	Key.h:57: if(P3_0 == 0){delay_key();while(P3_0 == 0);delay_key();KeyNum = 1;}
 	jb	_P3_0,00105$
 	lcall	_delay_key
 00101$:
@@ -1875,7 +1875,7 @@ _Key:
 	mov	r6,#0x01
 	mov	r7,#0x00
 00105$:
-;	Key.h:53: if(P3_1 == 0){delay_key();while(P3_1 == 0);delay_key();KeyNum = 2;}
+;	Key.h:58: if(P3_1 == 0){delay_key();while(P3_1 == 0);delay_key();KeyNum = 2;}
 	jb	_P3_1,00110$
 	lcall	_delay_key
 00106$:
@@ -1884,7 +1884,7 @@ _Key:
 	mov	r6,#0x02
 	mov	r7,#0x00
 00110$:
-;	Key.h:54: if(P3_2 == 0){delay_key();while(P3_2 == 0);delay_key();KeyNum = 3;}
+;	Key.h:59: if(P3_2 == 0){delay_key();while(P3_2 == 0);delay_key();KeyNum = 3;}
 	jb	_P3_2,00115$
 	lcall	_delay_key
 00111$:
@@ -1893,7 +1893,7 @@ _Key:
 	mov	r6,#0x03
 	mov	r7,#0x00
 00115$:
-;	Key.h:55: if(P3_3 == 0){delay_key();while(P3_3 == 0);delay_key();KeyNum = 4;}
+;	Key.h:60: if(P3_3 == 0){delay_key();while(P3_3 == 0);delay_key();KeyNum = 4;}
 	jb	_P3_3,00120$
 	lcall	_delay_key
 00116$:
@@ -1902,7 +1902,7 @@ _Key:
 	mov	r6,#0x04
 	mov	r7,#0x00
 00120$:
-;	Key.h:56: if(P3_4 == 0){delay_key();while(P3_4 == 0);delay_key();KeyNum = 5;}
+;	Key.h:61: if(P3_4 == 0){delay_key();while(P3_4 == 0);delay_key();KeyNum = 5;}
 	jb	_P3_4,00125$
 	lcall	_delay_key
 00121$:
@@ -1911,7 +1911,7 @@ _Key:
 	mov	r6,#0x05
 	mov	r7,#0x00
 00125$:
-;	Key.h:57: if(P3_5 == 0){delay_key();while(P3_5 == 0);delay_key();KeyNum = 6;}
+;	Key.h:62: if(P3_5 == 0){delay_key();while(P3_5 == 0);delay_key();KeyNum = 6;}
 	jb	_P3_5,00130$
 	lcall	_delay_key
 00126$:
@@ -1920,7 +1920,7 @@ _Key:
 	mov	r6,#0x06
 	mov	r7,#0x00
 00130$:
-;	Key.h:58: if(P3_6 == 0){delay_key();while(P3_6 == 0);delay_key();KeyNum = 7;}
+;	Key.h:63: if(P3_6 == 0){delay_key();while(P3_6 == 0);delay_key();KeyNum = 7;}
 	jb	_P3_6,00135$
 	lcall	_delay_key
 00131$:
@@ -1929,7 +1929,7 @@ _Key:
 	mov	r6,#0x07
 	mov	r7,#0x00
 00135$:
-;	Key.h:59: if(P3_7 == 0){delay_key();while(P3_7 == 0);delay_key();KeyNum = 8;}
+;	Key.h:64: if(P3_7 == 0){delay_key();while(P3_7 == 0);delay_key();KeyNum = 8;}
 	jb	_P3_7,00140$
 	lcall	_delay_key
 00136$:
@@ -1938,41 +1938,41 @@ _Key:
 	mov	r6,#0x08
 	mov	r7,#0x00
 00140$:
-;	Key.h:60: return KeyNum;
+;	Key.h:65: return KeyNum;
 	mov	dpl,r6
 	mov	dph,r7
-;	Key.h:61: }
+;	Key.h:66: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'Time_Init'
 ;------------------------------------------------------------
-;	Timer0.h:42: void Time_Init()
+;	Timer0.h:46: void Time_Init()
 ;	-----------------------------------------
 ;	 function Time_Init
 ;	-----------------------------------------
 _Time_Init:
-;	Timer0.h:44: TMOD |= 0x01;//定时器模式  16位计数器
+;	Timer0.h:48: TMOD |= 0x01;//定时器模式  16位计数器
 	orl	_TMOD,#0x01
-;	Timer0.h:45: TF0 = 0;     //标志位
+;	Timer0.h:49: TF0 = 0;     //标志位
 ;	assignBit
 	clr	_TF0
-;	Timer0.h:46: TR0 = 1;     //计时开始
+;	Timer0.h:50: TR0 = 1;     //计时开始
 ;	assignBit
 	setb	_TR0
-;	Timer0.h:47: TH0 = 0xfc;  //初值
+;	Timer0.h:51: TH0 = 0xfc;  //初值
 	mov	_TH0,#0xfc
-;	Timer0.h:48: TL0 = 0x18;
+;	Timer0.h:52: TL0 = 0x18;
 	mov	_TL0,#0x18
-;	Timer0.h:50: EA = 1; //总中断开关
+;	Timer0.h:54: EA = 1; //总中断开关
 ;	assignBit
 	setb	_EA
-;	Timer0.h:51: ET0 = 1; //分钟短开关
+;	Timer0.h:55: ET0 = 1; //分钟短开关
 ;	assignBit
 	setb	_ET0
-;	Timer0.h:52: PT0 = 0; //终端优先级
+;	Timer0.h:56: PT0 = 0; //终端优先级
 ;	assignBit
 	clr	_PT0
-;	Timer0.h:53: }
+;	Timer0.h:57: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
@@ -1982,28 +1982,28 @@ _Time_Init:
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	Main.c:52: LCD_Init();
+;	Main.c:53: LCD_Init();
 	lcall	_LCD_Init
-;	Main.c:53: Time_Init();
+;	Main.c:54: Time_Init();
 	lcall	_Time_Init
-;	Main.c:54: P2_2 = 1;
+;	Main.c:55: P2_2 = 1;
 ;	assignBit
 	setb	_P2_2
-;	Main.c:55: LCD_ShowString(1,1,"L:LiWenHui"); // 在LCD上显示字符串
+;	Main.c:56: LCD_ShowString(1,1,"L:LWH"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_0
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_0 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
-;	Main.c:56: LCD_ShowString(2,1,"C:ChenXiLai");
+;	Main.c:57: LCD_ShowString(2,1,"C:CXL & JM");
 	mov	_LCD_ShowString_PARM_3,#___str_1
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_1 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:58: if((AT24C02_ReadByte(0)|AT24C02_ReadByte(1) << 8) != 0)
+;	Main.c:59: if((AT24C02_ReadByte(0)|AT24C02_ReadByte(1) << 8) != 0)
 	mov	dpl,#0x00
 	lcall	_AT24C02_ReadByte
 	mov	r7,dpl
@@ -2023,14 +2023,14 @@ _main:
 	mov	a,r6
 	orl	a,r5
 	jz	00132$
-;	Main.c:60: LCD_Init(); // 初始化LCD
+;	Main.c:61: LCD_Init(); // 初始化LCD
 	lcall	_LCD_Init
-;	Main.c:61: FLAG = 1; // 设置标志位为1
+;	Main.c:62: FLAG = 1; // 设置标志位为1
 	mov	_FLAG,#0x01
 	mov	(_FLAG + 1),#0x00
-;	Main.c:64: while(1)
+;	Main.c:65: while(1)
 00132$:
-;	Main.c:67: if(K1 >= 3)
+;	Main.c:68: if(K1 >= 3)
 	clr	c
 	mov	a,_K1
 	subb	a,#0x03
@@ -2039,54 +2039,54 @@ _main:
 	jnc	00201$
 	ljmp	00116$
 00201$:
-;	Main.c:69: LCD_Init(); // 初始化LCD
+;	Main.c:70: LCD_Init(); // 初始化LCD
 	lcall	_LCD_Init
-;	Main.c:70: while(1)
+;	Main.c:71: while(1)
 00113$:
-;	Main.c:72: Num_Mat = MatrKey(); // 获取矩阵键盘按键值
+;	Main.c:73: Num_Mat = MatrKey(); // 获取矩阵键盘按键值
 	lcall	_MatrKey
 	mov	_Num_Mat,dpl
-;	Main.c:73: LCD_ShowString(1,1,"MODE:S"); // 在LCD上显示字符串
+;	Main.c:74: LCD_ShowString(1,1,"MODE:S"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_2
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_2 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
-;	Main.c:74: LCD_ShowString(2,1,"PD:"); // 在LCD上显示字符串
+;	Main.c:75: LCD_ShowString(2,1,"PD:"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_3
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_3 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:75: LCD_ShowNum(2,4,PassWord_Set,4); // 在LCD上显示数字
+;	Main.c:76: LCD_ShowNum(2,4,PassWord_Set,4); // 在LCD上显示数字
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Set
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Set + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:77: if(Num_Mat != 0 && Num_Mat <= 10)
+;	Main.c:78: if(Num_Mat != 0 && Num_Mat <= 10)
 	mov	a,_Num_Mat
 	jz	00106$
 	mov	a,_Num_Mat
 	add	a,#0xff - 0x0a
-;	Main.c:80: if(cont < 4)
+;	Main.c:81: if(cont < 4)
 	jc	00106$
 	mov	a,_cont
 	subb	a,#0x04
 	mov	a,(_cont + 1)
 	subb	a,#0x00
 	jnc	00106$
-;	Main.c:82: PassWord_Set *= 10;
+;	Main.c:83: PassWord_Set *= 10;
 	mov	__mulint_PARM_2,_PassWord_Set
 	mov	(__mulint_PARM_2 + 1),(_PassWord_Set + 1)
 	mov	dptr,#0x000a
 	lcall	__mulint
 	mov	_PassWord_Set,dpl
 	mov	(_PassWord_Set + 1),dph
-;	Main.c:83: PassWord_Set += Num_Mat%10; // 更新密码值
+;	Main.c:84: PassWord_Set += Num_Mat%10; // 更新密码值
 	mov	r6,_Num_Mat
 	mov	r7,#0x00
 	mov	__modsint_PARM_2,#0x0a
@@ -2103,13 +2103,13 @@ _main:
 	mov	a,r7
 	addc	a,(_PassWord_Set + 1)
 	mov	(_PassWord_Set + 1),a
-;	Main.c:84: cont++; // 计数加一
+;	Main.c:85: cont++; // 计数加一
 	inc	_cont
 	clr	a
 	cjne	a,_cont,00205$
 	inc	(_cont + 1)
 00205$:
-;	Main.c:85: LCD_ShowNum(2,4,PassWord_Set,4); // 在LCD上显示数字
+;	Main.c:86: LCD_ShowNum(2,4,PassWord_Set,4); // 在LCD上显示数字
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Set
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Set + 1)
@@ -2117,70 +2117,70 @@ _main:
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
 00106$:
-;	Main.c:89: if(Num_Mat == 11)
+;	Main.c:90: if(Num_Mat == 11)
 	mov	a,#0x0b
 	cjne	a,_Num_Mat,00109$
-;	Main.c:92: AT24C02_WriteByte(0,PassWord_Set % 256);// 低字节
+;	Main.c:93: AT24C02_WriteByte(0,PassWord_Set % 256);// 低字节
 	mov	r6,_PassWord_Set
 	mov	_AT24C02_WriteByte_PARM_2,r6
 	mov	dpl,#0x00
 	lcall	_AT24C02_WriteByte
-;	Main.c:93: AT24C02_WriteByte(1,PassWord_Set / 256);// 高字节
+;	Main.c:94: AT24C02_WriteByte(1,PassWord_Set / 256);// 高字节
 	mov	r6,(_PassWord_Set + 1)
 	mov	_AT24C02_WriteByte_PARM_2,r6
 	mov	dpl,#0x01
 	lcall	_AT24C02_WriteByte
-;	Main.c:94: LCD_ShowString(2,4,"Success"); // 在LCD上显示字符串
+;	Main.c:95: LCD_ShowString(2,4,"Success"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_4
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_4 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:95: DelayS(1); // 延时1秒
+;	Main.c:96: DelayS(1); // 延时1秒
 	mov	dptr,#0x0001
 	lcall	_DelayS
-;	Main.c:96: LCD_ShowString(2,1,"              "); // 在LCD上显示空格字符
+;	Main.c:97: LCD_ShowString(2,1,"              "); // 在LCD上显示空格字符
 	mov	_LCD_ShowString_PARM_3,#___str_5
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_5 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:97: LCD_Init(); // 初始化LCD
+;	Main.c:98: LCD_Init(); // 初始化LCD
 	lcall	_LCD_Init
-;	Main.c:98: PassWord_Set = 0; // 清零密码
+;	Main.c:99: PassWord_Set = 0; // 清零密码
 	clr	a
 	mov	_PassWord_Set,a
 	mov	(_PassWord_Set + 1),a
-;	Main.c:99: FLAG = 1; // 设置标志位为1
+;	Main.c:100: FLAG = 1; // 设置标志位为1
 	mov	_FLAG,#0x01
 ;	1-genFromRTrack replaced	mov	(_FLAG + 1),#0x00
 	mov	(_FLAG + 1),a
-;	Main.c:100: cont = 0; // 计数清零
+;	Main.c:101: cont = 0; // 计数清零
 	mov	_cont,a
 	mov	(_cont + 1),a
-;	Main.c:101: K1 = 0; // K1计数清零
+;	Main.c:102: K1 = 0; // K1计数清零
 	mov	_K1,a
 	mov	(_K1 + 1),a
-;	Main.c:102: break; // 退出循环
+;	Main.c:103: break; // 退出循环
 	sjmp	00116$
 00109$:
-;	Main.c:105: if(Num_Mat == 12)
+;	Main.c:106: if(Num_Mat == 12)
 	mov	a,#0x0c
 	cjne	a,_Num_Mat,00208$
 	sjmp	00209$
 00208$:
 	ljmp	00113$
 00209$:
-;	Main.c:107: cont = 0; // 计数清零
+;	Main.c:108: cont = 0; // 计数清零
 	clr	a
 	mov	_cont,a
 	mov	(_cont + 1),a
-;	Main.c:108: PassWord_Set = 0; // 清零密码
+;	Main.c:109: PassWord_Set = 0; // 清零密码
 	mov	_PassWord_Set,a
 	mov	(_PassWord_Set + 1),a
-;	Main.c:109: LCD_ShowNum(2,4,PassWord_Set,4); // 在LCD上显示数字
+;	Main.c:110: LCD_ShowNum(2,4,PassWord_Set,4); // 在LCD上显示数字
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,a
 	mov	(_LCD_ShowNum_PARM_3 + 1),a
@@ -2189,10 +2189,10 @@ _main:
 	lcall	_LCD_ShowNum
 	ljmp	00113$
 00116$:
-;	Main.c:114: Num_Mat = MatrKey();
+;	Main.c:115: Num_Mat = MatrKey();
 	lcall	_MatrKey
 	mov	_Num_Mat,dpl
-;	Main.c:116: if(FLAG == 1)
+;	Main.c:117: if(FLAG == 1)
 	mov	a,#0x01
 	cjne	a,_FLAG,00210$
 	dec	a
@@ -2201,49 +2201,49 @@ _main:
 00210$:
 	ljmp	00132$
 00211$:
-;	Main.c:118: LCD_ShowString(1,1,"MODE:E"); // 在LCD上显示字符串
+;	Main.c:119: LCD_ShowString(1,1,"MODE:E"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_6
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_6 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
-;	Main.c:119: LCD_ShowString(2,1,"PD:");
+;	Main.c:120: LCD_ShowString(2,1,"PD:");
 	mov	_LCD_ShowString_PARM_3,#___str_3
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_3 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:120: LCD_ShowString(1,9,"DOOR:");
+;	Main.c:121: LCD_ShowString(1,9,"DOOR:");
 	mov	_LCD_ShowString_PARM_3,#___str_7
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_7 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x09
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
-;	Main.c:121: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+;	Main.c:122: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_8
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_8 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x0e
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
-;	Main.c:122: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
+;	Main.c:123: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:123: LCD_ShowNum(2,8,PassWord,4);
+;	Main.c:124: LCD_ShowNum(2,8,PassWord,4);
 	mov	_LCD_ShowNum_PARM_2,#0x08
 	mov	_LCD_ShowNum_PARM_3,_PassWord
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:124: PassWord = (AT24C02_ReadByte(0)|AT24C02_ReadByte(1) << 8); // 读取EEPROM中的密码
+;	Main.c:125: PassWord = (AT24C02_ReadByte(0)|AT24C02_ReadByte(1) << 8); // 读取EEPROM中的密码
 	mov	dpl,#0x00
 	lcall	_AT24C02_ReadByte
 	mov	r7,dpl
@@ -2261,26 +2261,26 @@ _main:
 	mov	a,r5
 	orl	a,r4
 	mov	(_PassWord + 1),a
-;	Main.c:126: if(Num_Mat != 0 && Num_Mat <= 10)
+;	Main.c:127: if(Num_Mat != 0 && Num_Mat <= 10)
 	mov	a,_Num_Mat
 	jz	00120$
 	mov	a,_Num_Mat
 	add	a,#0xff - 0x0a
-;	Main.c:129: if(cont < 4)
+;	Main.c:130: if(cont < 4)
 	jc	00120$
 	mov	a,_cont
 	subb	a,#0x04
 	mov	a,(_cont + 1)
 	subb	a,#0x00
 	jnc	00120$
-;	Main.c:131: PassWord_Ent *= 10;
+;	Main.c:132: PassWord_Ent *= 10;
 	mov	__mulint_PARM_2,_PassWord_Ent
 	mov	(__mulint_PARM_2 + 1),(_PassWord_Ent + 1)
 	mov	dptr,#0x000a
 	lcall	__mulint
 	mov	_PassWord_Ent,dpl
 	mov	(_PassWord_Ent + 1),dph
-;	Main.c:132: PassWord_Ent += Num_Mat%10; // 更新密码值
+;	Main.c:133: PassWord_Ent += Num_Mat%10; // 更新密码值
 	mov	r6,_Num_Mat
 	mov	r7,#0x00
 	mov	__modsint_PARM_2,#0x0a
@@ -2297,13 +2297,13 @@ _main:
 	mov	a,r7
 	addc	a,(_PassWord_Ent + 1)
 	mov	(_PassWord_Ent + 1),a
-;	Main.c:133: cont++; // 计数加一
+;	Main.c:134: cont++; // 计数加一
 	inc	_cont
 	clr	a
 	cjne	a,_cont,00215$
 	inc	(_cont + 1)
 00215$:
-;	Main.c:134: LCD_ShowNum(2,1,PassWord_Ent,4); // 在LCD上显示数字
+;	Main.c:135: LCD_ShowNum(2,1,PassWord_Ent,4); // 在LCD上显示数字
 	mov	_LCD_ShowNum_PARM_2,#0x01
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent + 1)
@@ -2311,43 +2311,43 @@ _main:
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
 00120$:
-;	Main.c:138: if(Num_Mat == 11)
+;	Main.c:139: if(Num_Mat == 11)
 	mov	a,#0x0b
 	cjne	a,_Num_Mat,00216$
 	sjmp	00217$
 00216$:
 	ljmp	00126$
 00217$:
-;	Main.c:141: if(PassWord == PassWord_Ent)
+;	Main.c:142: if(PassWord == PassWord_Ent)
 	mov	a,_PassWord_Ent
 	cjne	a,_PassWord,00123$
 	mov	a,(_PassWord_Ent + 1)
 	cjne	a,(_PassWord + 1),00123$
-;	Main.c:143: LCD_ShowString(1,14,"O"); // 在LCD上显示字符串
+;	Main.c:144: LCD_ShowString(1,14,"O"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_9
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_9 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x0e
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
-;	Main.c:144: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
+;	Main.c:145: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:145: cont = 0; // 计数清零
+;	Main.c:146: cont = 0; // 计数清零
 	clr	a
 	mov	_cont,a
 	mov	(_cont + 1),a
-;	Main.c:146: PassWord_Ent = 0; // 清零密码
+;	Main.c:147: PassWord_Ent = 0; // 清零密码
 	mov	_PassWord_Ent,a
 	mov	(_PassWord_Ent + 1),a
-;	Main.c:147: DelayS(2); // 延时2秒
+;	Main.c:148: DelayS(2); // 延时2秒
 	mov	dptr,#0x0002
 	lcall	_DelayS
-;	Main.c:148: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+;	Main.c:149: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_8
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_8 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
@@ -2356,7 +2356,7 @@ _main:
 	lcall	_LCD_ShowString
 	sjmp	00124$
 00123$:
-;	Main.c:151: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+;	Main.c:152: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_8
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_8 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
@@ -2364,50 +2364,50 @@ _main:
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
 00124$:
-;	Main.c:152: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
+;	Main.c:153: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:153: PassWord_Ent = 0; // 清零密码
+;	Main.c:154: PassWord_Ent = 0; // 清零密码
 	clr	a
 	mov	_PassWord_Ent,a
 	mov	(_PassWord_Ent + 1),a
-;	Main.c:154: cont = 0; // 计数清零
+;	Main.c:155: cont = 0; // 计数清零
 	mov	_cont,a
 	mov	(_cont + 1),a
 00126$:
-;	Main.c:157: if(Num_Mat == 12)
+;	Main.c:158: if(Num_Mat == 12)
 	mov	a,#0x0c
 	cjne	a,_Num_Mat,00220$
 	sjmp	00221$
 00220$:
 	ljmp	00132$
 00221$:
-;	Main.c:159: cont = 0; // 计数清零
+;	Main.c:160: cont = 0; // 计数清零
 	clr	a
 	mov	_cont,a
 	mov	(_cont + 1),a
-;	Main.c:160: PassWord_Ent = 0; // 清零密码
+;	Main.c:161: PassWord_Ent = 0; // 清零密码
 	mov	_PassWord_Ent,a
 	mov	(_PassWord_Ent + 1),a
-;	Main.c:161: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
+;	Main.c:162: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,a
 	mov	(_LCD_ShowNum_PARM_3 + 1),a
 	mov	_LCD_ShowNum_PARM_4,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:165: }
+;	Main.c:166: }
 	ljmp	00132$
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'T0_Routine'
 ;------------------------------------------------------------
 ;count                     Allocated with name '_T0_Routine_count_65536_148'
 ;------------------------------------------------------------
-;	Main.c:168: void T0_Routine() __interrupt 1
+;	Main.c:169: void T0_Routine() __interrupt 1
 ;	-----------------------------------------
 ;	 function T0_Routine
 ;	-----------------------------------------
@@ -2427,43 +2427,43 @@ _T0_Routine:
 	push	(0+0)
 	push	psw
 	mov	psw,#0x00
-;	Main.c:172: TH0 = 0xfc; // 设置定时器初值高8位
+;	Main.c:173: TH0 = 0xfc; // 设置定时器初值高8位
 	mov	_TH0,#0xfc
-;	Main.c:173: TL0 = 0x18; // 设置定时器初值低8位
+;	Main.c:174: TL0 = 0x18; // 设置定时器初值低8位
 	mov	_TL0,#0x18
-;	Main.c:174: count++; // 计数加一
+;	Main.c:175: count++; // 计数加一
 	inc	_T0_Routine_count_65536_148
 	clr	a
 	cjne	a,_T0_Routine_count_65536_148,00131$
 	inc	(_T0_Routine_count_65536_148 + 1)
 00131$:
-;	Main.c:176: if(count == 500)
+;	Main.c:177: if(count == 500)
 	mov	a,#0xf4
 	cjne	a,_T0_Routine_count_65536_148,00109$
 	mov	a,#0x01
 	cjne	a,(_T0_Routine_count_65536_148 + 1),00109$
-;	Main.c:179: if(P3_4 == 0 && P3_4 == 0)
-	jb	_P3_4,00105$
-	jb	_P3_4,00105$
-;	Main.c:182: if(P3_4 == 0 && P3_5 == 0)
+;	Main.c:180: if(P3_4 == 0 && P3_5 == 0)
 	jb	_P3_4,00105$
 	jb	_P3_5,00105$
-;	Main.c:184: DelayS(1); // 延时1秒
+;	Main.c:183: if(P3_4 == 0 && P3_5 == 0)
+	jb	_P3_4,00105$
+	jb	_P3_5,00105$
+;	Main.c:185: DelayS(1); // 延时1秒
 	mov	dptr,#0x0001
 	lcall	_DelayS
-;	Main.c:185: K1++; // K1计数加一
+;	Main.c:186: K1++; // K1计数加一
 	inc	_K1
 	clr	a
 	cjne	a,_K1,00138$
 	inc	(_K1 + 1)
 00138$:
 00105$:
-;	Main.c:188: count = 0; // 计数清零
+;	Main.c:189: count = 0; // 计数清零
 	clr	a
 	mov	_T0_Routine_count_65536_148,a
 	mov	(_T0_Routine_count_65536_148 + 1),a
 00109$:
-;	Main.c:190: }
+;	Main.c:191: }
 	pop	psw
 	pop	(0+0)
 	pop	(0+1)
@@ -2483,12 +2483,12 @@ _T0_Routine:
 	.area CONST   (CODE)
 	.area CONST   (CODE)
 ___str_0:
-	.ascii "L:LiWenHui"
+	.ascii "L:LWH"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_1:
-	.ascii "C:ChenXiLai"
+	.ascii "C:CXL & JM"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
