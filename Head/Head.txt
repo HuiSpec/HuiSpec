@@ -1,0 +1,13 @@
+#include <stc12.h>
+#ifndef __Uart_H__
+#define __Uart_H__
+//用户调用函数名：
+
+
+#endif
+
+
+// @brief  函数功能：
+// @param  输入参数：
+// @retval 返 回 值：
+//函数体：
