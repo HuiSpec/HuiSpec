@@ -19,11 +19,11 @@
  * @                       '.:::::'                    ':'````..
  * @
  * @Author       : LiWenhui--2962896447@qq.com
- * @LastEditors  : LiWenhui--2962896447@qq.com
+ * @LastEditors  : Please set LastEditors
  * @Description  :  
  * @FilePath     : /C51/C51_Project/Lcd.h
  * @Version      : 0.0.1
- * @LastEditTime : 2024-04-20 23:37:25
+ * @LastEditTime : 2024-04-29 16:40:47
  * @Copyright    : GuiZhouUniversity------2024.
 **/
 
@@ -46,7 +46,9 @@ void LCD_ShowBinNum(unsigned char Line,unsigned char Column,unsigned int Number,
 
 
 #include <stc12.h>
-
+#define RS P1_0
+#define RW P1_1
+#define EN P2_5
 
 //引脚定义
 
@@ -75,12 +77,12 @@ void LCD_Delay()		//@11.0592MHz 1ms
   */
 void LCD_WriteCommand(unsigned char Command)
 {
-	P1_0=0;
-	P1_1=0;
+	RS=0;
+	RW=0;
 	P0=Command;
-	P2_5=1;
+	EN=1;
 	LCD_Delay();
-	P2_5=0;
+	EN=0;
 	LCD_Delay();
 }
 
@@ -91,12 +93,12 @@ void LCD_WriteCommand(unsigned char Command)
   */
 void LCD_WriteData(unsigned char Data)
 {
-	P1_0=1;
-	P1_1=0;
+	RS=1;
+	RW=0;
 	P0=Data;
-	P2_5=1;
+	EN=1;
 	LCD_Delay();
-	P2_5=0;
+	EN=0;
 	LCD_Delay();
 }
 

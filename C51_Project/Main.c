@@ -1,29 +1,33 @@
-/*
- *                        .::::.
- *                      .::::::::.
- *                     :::::::::::
- *                  ..:::::::::::'
- *               '::::::::::::'
- *                 .::::::::::
- *            '::::::::::::::..
- *                 ..::::::::::::.
- *               ``::::::::::::::::
- *                ::::``:::::::::'        .:::.
- *               ::::'   ':::::'       .::::::::.
- *             .::::'      ::::     .:::::::'::::.
- *            .:::'       :::::  .:::::::::' ':::::.
- *           .::'        :::::.:::::::::'      ':::::.
- *          .::'         ::::::::::::::'         ``::::.
- *      ...:::           ::::::::::::'              ``::.
- *     ````':.          ':::::::::'                  ::::..
- *                        '.:::::'                    ':'````..
- * 
- * @Author: LiWenhui  2962896447@qq.com
- * @Date: 2024-04-20 17:54:16
- * @LastEditors: userName userEmail
- * @LastEditTime: 2024-04-20 22:11:13
- * @FilePath: /C51/C51_Project/Main.c
- */
+/**
+ * @                       .::::.
+ * @                     .::::::::.
+ * @                    :::::::::::
+ * @                 ..:::::::::::'
+ * @              '::::::::::::'
+ * @                .::::::::::
+ * @           '::::::::::::::..
+ * @                ..::::::::::::.
+ * @              ``::::::::::::::::
+ * @               ::::``:::::::::'        .:::.
+ * @              ::::'   ':::::'       .::::::::.
+ * @            .::::'      ::::     .:::::::'::::.
+ * @           .:::'       :::::  .:::::::::' ':::::.
+ * @          .::'        :::::.:::::::::'      ':::::.
+ * @         .::'         ::::::::::::::'         ``::::.
+ * @     ...:::           ::::::::::::'              ``::.
+ * @    ````':.          ':::::::::'                  ::::..
+ * @                       '.:::::'                    ':'````..
+ * @
+ * @Author       : LiWenhui liwenhuiyx@yeah.net
+ * @LastEditors  : Please set LastEditors
+ * @Description  :  
+ * @FilePath     : /C51/C51_Project/Main.c
+ * @Version      : 0.0.1
+ * @LastEditTime : 2024-04-29 18:14:30
+ * @Copyright    : GuiZhouUniversity
+**/
+
+
 #include "stc12.h"
 #include "MatKey.h"
 #include "Delay.h"
@@ -32,7 +36,10 @@
 #include "Key.h"
 #include "Timer0.h"
 
-
+#define DU P2_0
+#define WE P2_1
+#define CS88 P2_2
+#define DARGER P2_3
 
 // 定义全局变量
 unsigned int K1; // 计数器（长按按键）
@@ -42,7 +49,7 @@ unsigned char Num_Mat; // 矩阵键盘按键值
 unsigned int PassWord_Set; // 设置的密码
 unsigned int PassWord; // 接受存储器中的密码
 unsigned int PassWord_Ent; // 输入的密码
-
+unsigned int FLAG_F;
 
 
 // 主函数
@@ -52,7 +59,9 @@ void main()
     
     LCD_Init();
     Time_Init();
-    P2_2 = 1;
+    CS88 = 0;
+    DU = 0;
+    WE = 0;
     LCD_ShowString(1,1,"L:LWH"); // 在LCD上显示字符串
     LCD_ShowString(2,1,"C:CXL & JM");
     // 读取EEPROM数据，判断是否需要设置密码
@@ -148,11 +157,15 @@ void main()
                     DelayS(2); // 延时2秒
                     LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
                 }
-                else
+                if(PassWord != PassWord_Ent && PassWord_Ent != 0)
+                {
                     LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
                     LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
                     PassWord_Ent = 0; // 清零密码
                     cont = 0; // 计数清零
+                    FLAG_F++;
+                }
+                    
             }
             // 判断按键值
             if(Num_Mat == 12)
@@ -161,6 +174,15 @@ void main()
                 PassWord_Ent = 0; // 清零密码
                 LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
             }
+            if(FLAG_F >= 3)
+            {
+                DARGER = 0;
+                DelayMs(500);
+                DARGER = 1;
+                FLAG_F = 0;
+                
+            }
+            LCD_ShowNum(2,15,FLAG_F,2);
         }
     }
 }

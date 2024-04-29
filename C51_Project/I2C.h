@@ -19,11 +19,11 @@
  * @                       '.:::::'                    ':'````..
  * @
  * @Author       : LiWenhui--2962896447@qq.com
- * @LastEditors  : LiWenhui--2962896447@qq.com
+ * @LastEditors  : Please set LastEditors
  * @Description  :  
  * @FilePath     : /C51/C51_Project/I2C.h
  * @Version      : 0.0.1
- * @LastEditTime : 2024-04-20 23:37:34
+ * @LastEditTime : 2024-04-29 17:20:01
  * @Copyright    : GuiZhouUniversity------2024.
 **/
 
