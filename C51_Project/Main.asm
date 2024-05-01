@@ -189,6 +189,7 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
+	.globl _Door_Flag
 	.globl _FLAG_F
 	.globl _PassWord_Ent
 	.globl _PassWord
@@ -497,8 +498,12 @@ _PassWord_Ent::
 	.ds 2
 _FLAG_F::
 	.ds 2
+_Door_Flag::
+	.ds 2
 _T0_Routine_count_65536_138:
 	.ds 2
+_T0_Routine_i_65536_138:
+	.ds 1
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -2404,7 +2409,10 @@ _main:
 ;	Main.c:157: DelayS(2); // 延时2秒
 	mov	dptr,#0x0002
 	lcall	_DelayS
-;	Main.c:158: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+;	Main.c:158: Door_Flag = 1; // 门状态标志位为1
+	mov	_Door_Flag,#0x01
+	mov	(_Door_Flag + 1),#0x00
+;	Main.c:159: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_8
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_8 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
@@ -2412,7 +2420,7 @@ _main:
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
 00123$:
-;	Main.c:160: if(PassWord != PassWord_Ent && PassWord_Ent != 0)
+;	Main.c:161: if(PassWord != PassWord_Ent && PassWord_Ent != 0)
 	mov	a,_PassWord_Ent
 	cjne	a,_PassWord,00236$
 	mov	a,(_PassWord_Ent + 1)
@@ -2422,45 +2430,45 @@ _main:
 	mov	a,_PassWord_Ent
 	orl	a,(_PassWord_Ent + 1)
 	jz	00128$
-;	Main.c:162: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+;	Main.c:163: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_8
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_8 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x0e
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
-;	Main.c:163: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
+;	Main.c:164: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:164: PassWord_Ent = 0; // 清零密码
+;	Main.c:165: PassWord_Ent = 0; // 清零密码
 	clr	a
 	mov	_PassWord_Ent,a
 	mov	(_PassWord_Ent + 1),a
-;	Main.c:165: cont = 0; // 计数清零
+;	Main.c:166: cont = 0; // 计数清零
 	mov	_cont,a
 	mov	(_cont + 1),a
-;	Main.c:166: FLAG_F++;
+;	Main.c:167: FLAG_F++;
 	inc	_FLAG_F
 ;	genFromRTrack removed	clr	a
 	cjne	a,_FLAG_F,00238$
 	inc	(_FLAG_F + 1)
 00238$:
 00128$:
-;	Main.c:171: if(Num_Mat == 12)
+;	Main.c:172: if(Num_Mat == 12)
 	mov	a,#0x0c
 	cjne	a,_Num_Mat,00130$
-;	Main.c:173: cont = 0; // 计数清零
+;	Main.c:174: cont = 0; // 计数清零
 	clr	a
 	mov	_cont,a
 	mov	(_cont + 1),a
-;	Main.c:174: PassWord_Ent = 0; // 清零密码
+;	Main.c:175: PassWord_Ent = 0; // 清零密码
 	mov	_PassWord_Ent,a
 	mov	(_PassWord_Ent + 1),a
-;	Main.c:175: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
+;	Main.c:176: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,a
 	mov	(_LCD_ShowNum_PARM_3 + 1),a
@@ -2468,42 +2476,43 @@ _main:
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
 00130$:
-;	Main.c:177: if(FLAG_F >= 3)
+;	Main.c:178: if(FLAG_F >= 3)
 	clr	c
 	mov	a,_FLAG_F
 	subb	a,#0x03
 	mov	a,(_FLAG_F + 1)
 	subb	a,#0x00
 	jc	00132$
-;	Main.c:179: DARGER = 0;
+;	Main.c:180: DARGER = 0;
 ;	assignBit
 	clr	_P2_3
-;	Main.c:180: DelayMs(500);
+;	Main.c:181: DelayMs(500);
 	mov	dptr,#0x01f4
 	lcall	_DelayMs
-;	Main.c:181: DARGER = 1;
+;	Main.c:182: DARGER = 1;
 ;	assignBit
 	setb	_P2_3
-;	Main.c:182: FLAG_F = 0;
+;	Main.c:183: FLAG_F = 0;
 	clr	a
 	mov	_FLAG_F,a
 	mov	(_FLAG_F + 1),a
 00132$:
-;	Main.c:185: LCD_ShowNum(2,15,FLAG_F,2);
+;	Main.c:186: LCD_ShowNum(2,15,FLAG_F,2);
 	mov	_LCD_ShowNum_PARM_2,#0x0f
 	mov	_LCD_ShowNum_PARM_3,_FLAG_F
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_FLAG_F + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x02
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:188: }
+;	Main.c:189: }
 	ljmp	00136$
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'T0_Routine'
 ;------------------------------------------------------------
 ;count                     Allocated with name '_T0_Routine_count_65536_138'
+;i                         Allocated with name '_T0_Routine_i_65536_138'
 ;------------------------------------------------------------
-;	Main.c:191: void T0_Routine() __interrupt 1
+;	Main.c:192: void T0_Routine() __interrupt 1
 ;	-----------------------------------------
 ;	 function T0_Routine
 ;	-----------------------------------------
@@ -2523,43 +2532,117 @@ _T0_Routine:
 	push	(0+0)
 	push	psw
 	mov	psw,#0x00
-;	Main.c:195: TH0 = 0xfc; // 设置定时器初值高8位
+;	Main.c:196: TH0 = 0xfc; // 设置定时器初值高8位
 	mov	_TH0,#0xfc
-;	Main.c:196: TL0 = 0x18; // 设置定时器初值低8位
+;	Main.c:197: TL0 = 0x18; // 设置定时器初值低8位
 	mov	_TL0,#0x18
-;	Main.c:197: count++; // 计数加一
+;	Main.c:198: count++; // 计数加一
 	inc	_T0_Routine_count_65536_138
 	clr	a
-	cjne	a,_T0_Routine_count_65536_138,00131$
+	cjne	a,_T0_Routine_count_65536_138,00159$
 	inc	(_T0_Routine_count_65536_138 + 1)
-00131$:
-;	Main.c:199: if(count == 500)
-	mov	a,#0xf4
-	cjne	a,_T0_Routine_count_65536_138,00109$
-	mov	a,#0x01
-	cjne	a,(_T0_Routine_count_65536_138 + 1),00109$
-;	Main.c:202: if(P3_4 == 0 && P3_5 == 0)
+00159$:
+;	Main.c:200: if(count == 100)
+	mov	a,#0x64
+	cjne	a,_T0_Routine_count_65536_138,00160$
+	clr	a
+	cjne	a,(_T0_Routine_count_65536_138 + 1),00160$
+	sjmp	00161$
+00160$:
+	ljmp	00117$
+00161$:
+;	Main.c:203: if(P3_4 == 0 && P3_5 == 0)
 	jb	_P3_4,00105$
 	jb	_P3_5,00105$
-;	Main.c:205: if(P3_4 == 0 && P3_5 == 0)
+;	Main.c:206: if(P3_4 == 0 && P3_5 == 0)
 	jb	_P3_4,00105$
 	jb	_P3_5,00105$
-;	Main.c:207: DelayS(1); // 延时1秒
+;	Main.c:208: DelayS(1); // 延时1秒
 	mov	dptr,#0x0001
 	lcall	_DelayS
-;	Main.c:208: K1++; // K1计数加一
+;	Main.c:209: K1++; // K1计数加一
 	inc	_K1
 	clr	a
-	cjne	a,_K1,00138$
+	cjne	a,_K1,00166$
 	inc	(_K1 + 1)
-00138$:
+00166$:
 00105$:
-;	Main.c:211: count = 0; // 计数清零
+;	Main.c:212: if(Door_Flag)
+	mov	a,_Door_Flag
+	orl	a,(_Door_Flag + 1)
+	jnz	00167$
+	ljmp	00110$
+00167$:
+;	Main.c:214: for(i=0;i<130;i++)
+	mov	_T0_Routine_i_65536_138,#0x00
+00113$:
+;	Main.c:216: P3 = 0x80;
+	mov	_P3,#0x80
+;	Main.c:217: DelayMs(3);
+	mov	dptr,#0x0003
+	lcall	_DelayMs
+;	Main.c:218: P3 = 0x40;
+	mov	_P3,#0x40
+;	Main.c:219: DelayMs(3);
+	mov	dptr,#0x0003
+	lcall	_DelayMs
+;	Main.c:220: P3 = 0x20;
+	mov	_P3,#0x20
+;	Main.c:221: DelayMs(3);
+	mov	dptr,#0x0003
+	lcall	_DelayMs
+;	Main.c:222: P3 = 0x10;
+	mov	_P3,#0x10
+;	Main.c:223: DelayMs(3);
+	mov	dptr,#0x0003
+	lcall	_DelayMs
+;	Main.c:214: for(i=0;i<130;i++)
+	inc	_T0_Routine_i_65536_138
+	mov	a,#0x100 - 0x82
+	add	a,_T0_Routine_i_65536_138
+	jnc	00113$
+;	Main.c:225: DelayS(2);
+	mov	dptr,#0x0002
+	lcall	_DelayS
+;	Main.c:226: for(i=0;i<130;i++)
+	mov	_T0_Routine_i_65536_138,#0x00
+00115$:
+;	Main.c:228: P3 = 0x10;
+	mov	_P3,#0x10
+;	Main.c:229: DelayMs(3);
+	mov	dptr,#0x0003
+	lcall	_DelayMs
+;	Main.c:230: P3 = 0x20;
+	mov	_P3,#0x20
+;	Main.c:231: DelayMs(3);
+	mov	dptr,#0x0003
+	lcall	_DelayMs
+;	Main.c:232: P3 = 0x40;
+	mov	_P3,#0x40
+;	Main.c:233: DelayMs(3);
+	mov	dptr,#0x0003
+	lcall	_DelayMs
+;	Main.c:234: P3 = 0x80;
+	mov	_P3,#0x80
+;	Main.c:235: DelayMs(3);
+	mov	dptr,#0x0003
+	lcall	_DelayMs
+;	Main.c:226: for(i=0;i<130;i++)
+	inc	_T0_Routine_i_65536_138
+	mov	a,#0x100 - 0x82
+	add	a,_T0_Routine_i_65536_138
+	jnc	00115$
+;	Main.c:237: Door_Flag = 0;
+	clr	a
+	mov	_Door_Flag,a
+	mov	(_Door_Flag + 1),a
+00110$:
+;	Main.c:239: count = 0; // 计数清零
 	clr	a
 	mov	_T0_Routine_count_65536_138,a
 	mov	(_T0_Routine_count_65536_138 + 1),a
-00109$:
-;	Main.c:213: }
+00117$:
+;	Main.c:241: }
 	pop	psw
 	pop	(0+0)
 	pop	(0+1)

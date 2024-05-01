@@ -23,7 +23,7 @@
  * @Description  :  
  * @FilePath     : /C51/C51_Project/Main.c
  * @Version      : 0.0.1
- * @LastEditTime : 2024-04-29 18:14:30
+ * @LastEditTime : 2024-05-01 20:36:24
  * @Copyright    : GuiZhouUniversity
 **/
 
@@ -50,7 +50,7 @@ unsigned int PassWord_Set; // 设置的密码
 unsigned int PassWord; // 接受存储器中的密码
 unsigned int PassWord_Ent; // 输入的密码
 unsigned int FLAG_F;
-
+unsigned int Door_Flag; // 门状态标志位
 
 // 主函数
 void main()
@@ -155,6 +155,7 @@ void main()
                     cont = 0; // 计数清零
                     PassWord_Ent = 0; // 清零密码
                     DelayS(2); // 延时2秒
+                   Door_Flag = 1; // 门状态标志位为1
                     LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
                 }
                 if(PassWord != PassWord_Ent && PassWord_Ent != 0)
@@ -165,7 +166,6 @@ void main()
                     cont = 0; // 计数清零
                     FLAG_F++;
                 }
-                    
             }
             // 判断按键值
             if(Num_Mat == 12)
@@ -191,12 +191,12 @@ void main()
 void T0_Routine() __interrupt 1
 {
     static unsigned int count;
-
+    static unsigned char i;
     TH0 = 0xfc; // 设置定时器初值高8位
     TL0 = 0x18; // 设置定时器初值低8位
     count++; // 计数加一
     // 判断计数是否达到1000
-    if(count == 500)
+    if(count == 100)
     {
         // 判断P3_4和P3_5引脚是否同时为低电平
         if(P3_4 == 0 && P3_5 == 0)
@@ -208,6 +208,33 @@ void T0_Routine() __interrupt 1
                 K1++; // K1计数加一
             }
         }
-        count = 0; // 计数清零
+        if(Door_Flag)
+        {
+            for(i=0;i<130;i++)
+            {
+                P3 = 0x80;
+                DelayMs(3);
+                P3 = 0x40;
+                DelayMs(3);
+                P3 = 0x20;
+                DelayMs(3);
+                P3 = 0x10;
+                DelayMs(3);
+            }
+            DelayS(2);
+            for(i=0;i<130;i++)
+            {
+                P3 = 0x10;
+                DelayMs(3);
+                P3 = 0x20;
+                DelayMs(3);
+                P3 = 0x40;
+                DelayMs(3);
+                P3 = 0x80;
+                DelayMs(3);
+            }
+            Door_Flag = 0;
+        }
+    count = 0; // 计数清零
     }
 }
