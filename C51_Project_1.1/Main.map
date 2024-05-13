@@ -71,18 +71,18 @@ C:   00000020  s__CODE
 C:   00000022  l_GSINIT3                       
 C:   0000002A  l_GSINIT4                       
 C:   00000040  s_GSINIT4                       
-C:   0000005D  s_SSEG                          
+C:   0000005F  s_SSEG                          
 C:   0000006A  l_DSEG                          
 C:   0000006A  s_GSFINAL                       
 C:   0000006A  s_GSINIT                        
 C:   0000006A  s_GSINIT5                       
 C:   0000006D  s_CSEG                          
-C:   00000075  l_CONST                         
-C:   000000A3  l_SSEG                          
+C:   000000A1  l_SSEG                          
+C:   000000A6  l_CONST                         
 C:   00000100  l_IRAM                          
-C:   00000D30  l_CSEG                          
-C:   00000D9D  s_CONST                         
-C:   00000E12  s_XINIT                         
+C:   00000F85  l_CSEG                          
+C:   00000FF2  s_CONST                         
+C:   00001098  s_XINIT                         
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -358,8 +358,8 @@ DSEG                                00000000    0000006A =         106. bytes (R
      00000052  _PassWord_Ent1_1                   Main
      00000054  _PassWord_Ent2                     Main
      00000056  _FLAG_F                            Main
-     00000058  _Door_Flag                         Main
-
+     00000058  _FLAG_D                            Main
+     0000005A  _FLAG_M                            Main
 ASxxxx Linker V03.00 + NoICE + sdld,  page 10.
 Hexadecimal  [32-Bits]
 
@@ -380,11 +380,11 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-SSEG                                0000005D    000000A3 =         163. bytes (REL,OVR)
+SSEG                                0000005F    000000A1 =         161. bytes (REL,OVR)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000005D  __start__stack                     Main
+     0000005F  __start__stack                     Main
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 12.
 Hexadecimal  [32-Bits]
@@ -454,7 +454,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                0000006D    00000D30 =        3376. bytes (REL,CON,CODE)
+CSEG                                0000006D    00000F85 =        3973. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -488,21 +488,21 @@ C:   0000057C  _delay_key                         Main
 C:   000005A5  _Key                               Main
 C:   0000062E  _Time_Init                         Main
 C:   00000642  _main                              Main
-C:   00000BCB  _T0_Routine                        Main
-C:   00000CB4  __divuint                          _divuint
-C:   00000CDD  __mulint                           _mulint
-C:   00000CDD  __mulint_dummy                     _mulint
-C:   00000CFA  __moduint                          _moduint
-C:   00000D47  __gptrget                          _gptrget
-C:   00000D63  __modsint                          _modsint
-C:   00000D99  __sdcc_external_startup            _startup
+C:   00000E20  _T0_Routine                        Main
+C:   00000F09  __divuint                          _divuint
+C:   00000F32  __mulint                           _mulint
+C:   00000F32  __mulint_dummy                     _mulint
+C:   00000F4F  __moduint                          _moduint
+C:   00000F9C  __gptrget                          _gptrget
+C:   00000FB8  __modsint                          _modsint
+C:   00000FEE  __sdcc_external_startup            _startup
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 19.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CONST                               00000D9D    00000075 =         117. bytes (REL,CON,CODE)
+CONST                               00000FF2    000000A6 =         166. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
