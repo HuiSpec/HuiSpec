@@ -21,9 +21,9 @@
  * @Author       : LiWenhui liwenhuiyx@yeah.net
  * @LastEditors  : Please set LastEditors
  * @Description  :  
- * @FilePath     : /C51/C51_Project_1.1 copy/Main.c
+ * @FilePath     : /C51/C51_Project_1.1.1/Main.c
  * @Version      : 0.0.1
- * @LastEditTime : 2024-05-16 11:03:39
+ * @LastEditTime : 2024-05-16 23:57:46
  * @Copyright    : GuiZhouUniversity
 **/
 
@@ -63,7 +63,7 @@ unsigned int PassWord_Ent2;
 unsigned int FLAG_F; //错误输入标志位
 unsigned int FLAG_D; // 门状态标志位
 unsigned int FLAG_M; // 管理员状态标志位
-
+unsigned int FLAG_E; // 错误密码标志位
 // 主函数
 void main()
 {
@@ -81,6 +81,7 @@ void main()
         LCD_Init(); // 初始化LCD
         FLAG = 1; // 设置标志位为1
     }
+    
 
 
     // 主循环
@@ -94,62 +95,57 @@ void main()
             {
                 Num_Mat = MatrKey(); // 获取矩阵键盘按键值
                 // LCD_ShowNum(2,4,PassWord_Set,4); // 在LCD上显示数字
-                
-
-                    LCD_ShowString(1,9,"       ");
-                    LCD_ShowString(1,1,"MODE:S"); // 在LCD上显示字符串
-                    LCD_ShowString(2,1,"PD:"); // 在LCD上显示字符串
-                    if(Num_Mat != 0 && Num_Mat <= 10)
-                    {            
-                        if (cont < 6)
-                        {
-                            PassWord_Set = PassWord_Set * 10 + Num_Mat%10;
-                            PassWord_Set1_1 = PassWord_Set / 1000;
-                            PassWord_Set1 = PassWord_Set1 *10 + PassWord_Set1_1;
-                            PassWord_Set2 = PassWord_Set % 1000;
-                            PassWord_Set = PassWord_Set2;
-                            cont++;
-                            // LCD_ShowNum(1,4,password,10);
-                            LCD_ShowNum(2,4,PassWord_Set1,3);
-                            LCD_ShowNum(2,7,PassWord_Set2,3);
-                        }
-                    }
-                    // 判断按键值
-                    if(Num_Mat == 11)
+                LCD_ShowString(1,9,"       ");
+                LCD_ShowString(1,1,"MODE:S"); // 在LCD上显示字符串
+                LCD_ShowString(2,1,"PD:"); // 在LCD上显示字符串
+                if(Num_Mat != 0 && Num_Mat <= 10)
+                {            
+                    if (cont < 6)
                     {
-                        LCD_Init(); // 初始化LCD
-                        // 将密码写入EEPROM
-                        AT24C02_WriteByte(0,PassWord_Set1 % 256);// 低字节
-                        AT24C02_WriteByte(1,PassWord_Set1 / 256);// 高字节
-
-                        AT24C02_WriteByte(2,PassWord_Set2 % 256);// 低字节
-                        AT24C02_WriteByte(3,PassWord_Set2 / 256);
-                        LCD_ShowString(2,4,"Success"); // 在LCD上显示字符串
-                        DelayS(1); // 延时1秒
-                        LCD_ShowString(2,1,"              "); // 在LCD上显示空格字符
-                        LCD_Init(); // 初始化LCD
-                        PassWord_Set = 0; // 清零密码
-                        PassWord_Set1 = 0; // 清零密码
-                        PassWord_Set2 = 0; // 清零密码
-                        FLAG = 1; // 设置标志位为1
-                        cont = 0; // 计数清零
-                        K1 = 0; // K1计数清零
-                        FLAG_M = 0; // 状态标志位清零
-                        break; // 退出循环
-                    }
-                    // 判断按键值
-                    if(Num_Mat == 12)
-                    {
-                        cont = 0; // 计数清零
-                        PassWord_Set = 0; // 清零密码
-                        PassWord_Set1 = 0; // 清零密码
-                        PassWord_Set2 = 0;
+                        PassWord_Set = PassWord_Set * 10 + Num_Mat%10;
+                        PassWord_Set1_1 = PassWord_Set / 1000;
+                        PassWord_Set1 = PassWord_Set1 *10 + PassWord_Set1_1;
+                        PassWord_Set2 = PassWord_Set % 1000;
+                        PassWord_Set = PassWord_Set2;
+                        cont++;
+                        // LCD_ShowNum(1,4,password,10);
                         LCD_ShowNum(2,4,PassWord_Set1,3);
-                        LCD_ShowNum(2,7,PassWord_Set2,3);// 在LCD上显示数字
+                        LCD_ShowNum(2,7,PassWord_Set2,3);
                     }
-                
-               
-                
+                }
+                // 判断按键值
+                if(Num_Mat == 11)
+                {
+                    LCD_Init(); // 初始化LCD
+                    // 将密码写入EEPROM
+                    AT24C02_WriteByte(0,PassWord_Set1 % 256);// 低字节
+                    AT24C02_WriteByte(1,PassWord_Set1 / 256);// 高字节
+
+                    AT24C02_WriteByte(2,PassWord_Set2 % 256);// 低字节
+                    AT24C02_WriteByte(3,PassWord_Set2 / 256);
+                    LCD_ShowString(2,4,"Success"); // 在LCD上显示字符串
+                    DelayS(1); // 延时1秒
+                    LCD_ShowString(2,1,"              "); // 在LCD上显示空格字符
+                    LCD_Init(); // 初始化LCD
+                    PassWord_Set = 0; // 清零密码
+                    PassWord_Set1 = 0; // 清零密码
+                    PassWord_Set2 = 0; // 清零密码
+                    FLAG = 1; // 设置标志位为1
+                    cont = 0; // 计数清零
+                    K1 = 0; // K1计数清零
+                    FLAG_M = 0; // 状态标志位清零
+                    break; // 退出循环
+                }
+                // 判断按键值
+                if(Num_Mat == 12)
+                {
+                    cont = 0; // 计数清零
+                    PassWord_Set = 0; // 清零密码
+                    PassWord_Set1 = 0; // 清零密码
+                    PassWord_Set2 = 0;
+                    LCD_ShowNum(2,4,PassWord_Set1,3);
+                    LCD_ShowNum(2,7,PassWord_Set2,3);// 在LCD上显示数字
+                }
             }
         }
         // 获取矩阵键盘按键值
@@ -158,21 +154,29 @@ void main()
         if(FLAG == 1)
         { 
             LCD_ShowString(2,1,"PD:");
-            LCD_ShowString(1,9,"DOOR:");
-            LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+            
             // LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
             // LCD_ShowNum(2,8,PassWord,4);
             PassWord1 = (AT24C02_ReadByte(0)|AT24C02_ReadByte(1) << 8); // 读取EEPROM中的密码
             PassWord2 = (AT24C02_ReadByte(2)|AT24C02_ReadByte(3) << 8); 
              //是管理员模式，进入管理员密码输入模式 密码为33333
             if(Num_Mat == 13)
+            {
+                FLAG_M++;
+            }
+            if(FLAG_M > 100)
+            {
+                FLAG_M = 0;
+            }
+            if(FLAG_M%2 == 1)
                 {
-                    FLAG_M = 1;
-                }
-            if(Num_Mat == 14)
-                FLAG_M = 0; // 状态标志位清零
-            if(FLAG_M == 1)
-                {
+                    LCD_ShowString(1,9,"     ");
+                    LCD_ShowString(1,14," ");
+                    LCD_ShowString(2,15,"  ");
+                    LCD_ShowString(2,9," "); // 在LCD上显示字符串
+                    // 判断按键值是否有效
+                    // LCD_Init(); // 初始化LCD
+                    LCD_ShowString(2,1,"PD:");
                     LCD_ShowString(1,1,"MODE:M"); // 在LCD上显示字符串
                     if(Num_Mat != 0 && Num_Mat <= 10)
                     {            
@@ -203,22 +207,43 @@ void main()
                         // 判断输入密码是否正确
                         if(PassWord_Ent == 33333)
                         {
+                            // LCD_Init();
                             cont = 0; // 计数清零
                             PassWord_Ent = 0; // 清零密码
-                            LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
-                            LCD_ShowString(1,14,"O"); // 在LCD上显示字符串
-                            DelayS(2); // 延时2秒
-                            FLAG_D = 1; // 门状态标志位为1
-                            LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
-                        }
-                        if(PassWord_Ent != 33333 && PassWord_Ent != 0)
-                        {
-                            LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
-                            
-                            PassWord_Ent = 0; // 清零密码
-                            LCD_ShowNum(2,4,PassWord_Ent,5); // 在LCD上显示数字
-                            cont = 0; // 计数清零
-                            FLAG_F++;
+                            // LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
+                            // LCD_ShowString(1,14,"O"); // 在LCD上显示字符串
+                            // DelayS(2); // 延时2秒
+                            // FLAG_D = 1; // 门状态标志位为1
+                            // LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+                            while(1)
+                            {
+                                static unsigned int i;
+                                Num_Mat = MatrKey(); // 获取矩阵键盘按键值
+                                if(Num_Mat == 14)
+                                {
+                                    i++;
+                                }
+                                if(i > 2)
+                                {
+                                    i = 0;
+                                }
+                                switch (i)
+                                {
+                                    case 0:LCD_ShowString(1,10,"DEL PD");break;
+                                    case 1:LCD_ShowString(1,10,"RES PD");break;
+                                    case 2:LCD_ShowString(1,10,"OPE DR");break;
+                                }
+                                if(Num_Mat == 15)
+                                {
+                                    switch (i)
+                                    {
+                                        case 0:AT24C02_WriteByte(0,0);AT24C02_WriteByte(1,0);AT24C02_WriteByte(2,0);AT24C02_WriteByte(3,0);LCD_ShowString(2,4,"PdDel OK");DelayMs(500);LCD_Init();break;
+                                        case 1:AT24C02_WriteByte(4,0);LCD_ShowString(2,4,"RESET OK");DelayMs(1000);LCD_Init();break;
+                                        case 2:FLAG_D = 1;LCD_ShowString(1,9,"DOOR:");LCD_ShowString(1,14,"O ");DelayMs(1000);LCD_Init();break;
+                                    }
+                                    break;
+                                }
+                            }
                         }
                     }
                     // 判断按键值
@@ -228,97 +253,102 @@ void main()
                         PassWord_Ent = 0; // 清零密码
                         LCD_ShowNum(2,4,PassWord_Ent,5); // 在LCD上显示数字
                     }
-                    if(Num_Mat == 16)
-                    {
 
-                        AT24C02_WriteByte(0,PassWord_Set1 % 256);// 低字节
-                        AT24C02_WriteByte(1,PassWord_Set1 / 256);// 高字节
-
-                        AT24C02_WriteByte(2,PassWord_Set2 % 256);// 低字节
-                        AT24C02_WriteByte(3,PassWord_Set2 / 256);
-                        LCD_ShowString(2,4,"PasswordDel OK");
-                        LCD_Init();
-                    }
                 }
             
             else
             {
-                LCD_ShowString(1,1,"MODE:E"); // 在LCD上显示字符串
+                LCD_ShowString(1,9,"DOOR:");
+                LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+                if(AT24C02_ReadByte(4))
+                {
+                    FLAG_E = 0;
+                }
+                else
+                {
+                    FLAG_E = 1;
+                }
+                if(FLAG_E == 1)
+                {
+                    LCD_ShowString(1,1,"MODE:E"); // 在LCD上显示字符串
                 // 判断按键值是否有效
-                if(Num_Mat != 0 && Num_Mat <= 10)
-                {            
-                    // 判断输入密码位数是否小于4
-                    // 
-                    if (cont < 6)
-                    {
-                        PassWord_Ent = PassWord_Ent * 10 + Num_Mat%10;
-                        PassWord_Ent1_1 = PassWord_Ent / 1000;
-                        PassWord_Ent1 = PassWord_Ent1 *10 + PassWord_Ent1_1;
-                        PassWord_Ent2 = PassWord_Ent % 1000;
-                        PassWord_Ent = PassWord_Ent2;
-                        cont++;
-                        // LCD_ShowNum(1,4,password,10);
-                        LCD_ShowNum(2,4,PassWord_Ent1,3);
-                        LCD_ShowNum(2,7,PassWord_Ent2,3);
+                    if(Num_Mat != 0 && Num_Mat <= 10)
+                    {            
+                        // 判断输入密码位数是否小于4
+                        // 
+                        if (cont < 6)
+                        {
+                            PassWord_Ent = PassWord_Ent * 10 + Num_Mat%10;
+                            PassWord_Ent1_1 = PassWord_Ent / 1000;
+                            PassWord_Ent1 = PassWord_Ent1 *10 + PassWord_Ent1_1;
+                            PassWord_Ent2 = PassWord_Ent % 1000;
+                            PassWord_Ent = PassWord_Ent2;
+                            cont++;
+                            // LCD_ShowNum(1,4,password,10);
+                            LCD_ShowNum(2,4,PassWord_Ent1,3);
+                            LCD_ShowNum(2,7,PassWord_Ent2,3);
+                        }
+                        DelayMs(700);
+                        //遮掩密码
+                        switch(cont)
+                        {
+                            case 0:LCD_ShowString(2,4,"000000");break;
+                            case 1:LCD_ShowString(2,4,"00000*");break;
+                            case 2:LCD_ShowString(2,4,"0000**");break;
+                            case 3:LCD_ShowString(2,4,"000***");break;
+                            case 4:LCD_ShowString(2,4,"00****");break;
+                            case 5:LCD_ShowString(2,4,"0*****");break;
+                            case 6:LCD_ShowString(2,4,"******");break;
+                        }
                     }
-                    DelayMs(700);
-                    //遮掩密码
-                    switch(cont)
+                    // 判断按键值
+                    if(Num_Mat == 11)
                     {
-                        case 0:LCD_ShowString(2,4,"000000");break;
-                        case 1:LCD_ShowString(2,4,"00000*");break;
-                        case 2:LCD_ShowString(2,4,"0000**");break;
-                        case 3:LCD_ShowString(2,4,"000***");break;
-                        case 4:LCD_ShowString(2,4,"00****");break;
-                        case 5:LCD_ShowString(2,4,"0*****");break;
-                        case 6:LCD_ShowString(2,4,"******");break;
+                        // 判断输入密码是否正确
+                        if(PassWord1 == PassWord_Ent1 && PassWord2 == PassWord_Ent2 && PassWord_Ent1 != 0 && PassWord_Ent2 != 0)
+                        {
+                            LCD_ShowString(1,14,"O"); // 在LCD上显示字符串
+                            // LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
+                            cont = 0; // 计数清零
+                            PassWord_Ent = 0; // 清零密码
+                            PassWord_Ent1 = 0; // 清零密码
+                            PassWord_Ent2 = 0; // 清零密码
+                            DelayS(2); // 延时2秒
+                            FLAG_D = 1; // 门状态标志位为1
+                            LCD_ShowNum(2,4,PassWord_Ent1,3);
+                            LCD_ShowNum(2,7,PassWord_Ent2,3);
+                            LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+                        }
+                        else
+                        {
+                            LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+                            // LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
+                            PassWord_Ent = 0; // 清零密码
+                            PassWord_Ent1 = 0; // 清零密码
+                            PassWord_Ent2 = 0; // 清零密码
+                            LCD_ShowString(2,4,"000000");
+                            cont = 0; // 计数清零
+                            FLAG_F++;
+                        }
                     }
-                }
-                // 判断按键值
-                if(Num_Mat == 11)
-                {
-                    // 判断输入密码是否正确
-                    if(PassWord1 == PassWord_Ent1 && PassWord2 == PassWord_Ent2)
+                    // 判断按键值
+                    if(Num_Mat == 12)
                     {
-                        LCD_ShowString(1,14,"O"); // 在LCD上显示字符串
-                        // LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
                         cont = 0; // 计数清零
                         PassWord_Ent = 0; // 清零密码
                         PassWord_Ent1 = 0; // 清零密码
                         PassWord_Ent2 = 0; // 清零密码
-                        DelayS(2); // 延时2秒
-                        FLAG_D = 1; // 门状态标志位为1
                         LCD_ShowNum(2,4,PassWord_Ent1,3);
-                        LCD_ShowNum(2,7,PassWord_Ent2,3);
-                        LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
-                    }
-                    else
-                    {
-                        LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
-                        // LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
-                        PassWord_Ent = 0; // 清零密码
-                        PassWord_Ent1 = 0; // 清零密码
-                        PassWord_Ent2 = 0; // 清零密码
-                        LCD_ShowString(2,4,"000000");
-                        cont = 0; // 计数清零
-                        FLAG_F++;
+                        LCD_ShowNum(2,7,PassWord_Ent2,3);// 在LCD上显示数字
                     }
                 }
-                // 判断按键值
-                if(Num_Mat == 12)
-                {
-                    cont = 0; // 计数清零
-                    PassWord_Ent = 0; // 清零密码
-                    PassWord_Ent1 = 0; // 清零密码
-                    PassWord_Ent2 = 0; // 清零密码
-                    LCD_ShowNum(2,4,PassWord_Ent1,3);
-                    LCD_ShowNum(2,7,PassWord_Ent2,3);// 在LCD上显示数字
-                }
-                if(FLAG_F >= 3)
+                
+                if(FLAG_F >= 5)
                 {
                     DARGER = 0;
                     DelayMs(500);
                     DARGER = 1;
+                    AT24C02_WriteByte(4,1); // 错误密码标志位为1
                     FLAG_F = 0;
                     
                 }
@@ -346,7 +376,7 @@ void T0_Routine() __interrupt 1
             // 判断P3_4和P3_5引脚是否同时为低电平
             if(P3_4 == 0 && P3_5 == 0)
             {
-                DelayS(1); // 延时1秒
+                DelayS(2); // 延时1秒
                 K1++; // K1计数加一
             }
         }
@@ -375,6 +405,7 @@ void T0_Routine() __interrupt 1
                 P3 = 0x80;
                 DelayMs(3);
             }
+            P3 = 0xff;
             FLAG_D = 0;
         }
     count = 0; // 计数清零

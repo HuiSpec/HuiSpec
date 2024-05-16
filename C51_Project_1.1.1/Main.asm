@@ -189,6 +189,7 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
+	.globl _FLAG_E
 	.globl _FLAG_M
 	.globl _FLAG_D
 	.globl _FLAG_F
@@ -524,9 +525,13 @@ _FLAG_D::
 	.ds 2
 _FLAG_M::
 	.ds 2
-_T0_Routine_count_65536_162:
+_FLAG_E::
 	.ds 2
-_T0_Routine_i_65536_162:
+_main_i_458752_151:
+	.ds 2
+_T0_Routine_count_65536_170:
+	.ds 2
+_T0_Routine_i_65536_170:
 	.ds 1
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
@@ -2009,6 +2014,8 @@ _Time_Init:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
+;i                         Allocated with name '_main_i_458752_151'
+;------------------------------------------------------------
 ;	Main.c:68: void main()
 ;	-----------------------------------------
 ;	 function main
@@ -2079,72 +2086,72 @@ _main:
 	orl	ar5,a
 	mov	a,r6
 	orl	a,r5
-	jz	00174$
+	jz	00193$
 00101$:
 ;	Main.c:81: LCD_Init(); // 初始化LCD
 	lcall	_LCD_Init
 ;	Main.c:82: FLAG = 1; // 设置标志位为1
 	mov	_FLAG,#0x01
 	mov	(_FLAG + 1),#0x00
-;	Main.c:87: while(1)
-00174$:
-;	Main.c:90: if(K1 >= 3)
+;	Main.c:88: while(1)
+00193$:
+;	Main.c:91: if(K1 >= 3)
 	clr	c
 	mov	a,_K1
 	subb	a,#0x03
 	mov	a,(_K1 + 1)
 	subb	a,#0x00
-	jnc	00308$
+	jnc	00371$
 	ljmp	00117$
-00308$:
-;	Main.c:92: LCD_Init(); // 初始化LCD
+00371$:
+;	Main.c:93: LCD_Init(); // 初始化LCD
 	lcall	_LCD_Init
-;	Main.c:93: while(1)
+;	Main.c:94: while(1)
 00114$:
-;	Main.c:95: Num_Mat = MatrKey(); // 获取矩阵键盘按键值
+;	Main.c:96: Num_Mat = MatrKey(); // 获取矩阵键盘按键值
 	lcall	_MatrKey
 	mov	_Num_Mat,dpl
-;	Main.c:99: LCD_ShowString(1,9,"       ");
+;	Main.c:98: LCD_ShowString(1,9,"       ");
 	mov	_LCD_ShowString_PARM_3,#___str_2
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_2 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x09
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
-;	Main.c:100: LCD_ShowString(1,1,"MODE:S"); // 在LCD上显示字符串
+;	Main.c:99: LCD_ShowString(1,1,"MODE:S"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_3
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_3 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
-;	Main.c:101: LCD_ShowString(2,1,"PD:"); // 在LCD上显示字符串
+;	Main.c:100: LCD_ShowString(2,1,"PD:"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_4
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_4 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:102: if(Num_Mat != 0 && Num_Mat <= 10)
+;	Main.c:101: if(Num_Mat != 0 && Num_Mat <= 10)
 	mov	a,_Num_Mat
-	jnz	00309$
+	jnz	00372$
 	ljmp	00107$
-00309$:
+00372$:
 	mov	a,_Num_Mat
 	add	a,#0xff - 0x0a
-	jnc	00310$
+	jnc	00373$
 	ljmp	00107$
-00310$:
-;	Main.c:104: if (cont < 6)
+00373$:
+;	Main.c:103: if (cont < 6)
 	clr	c
 	mov	a,_cont
 	subb	a,#0x06
 	mov	a,(_cont + 1)
 	subb	a,#0x00
-	jc	00311$
+	jc	00374$
 	ljmp	00107$
-00311$:
-;	Main.c:106: PassWord_Set = PassWord_Set * 10 + Num_Mat%10;
+00374$:
+;	Main.c:105: PassWord_Set = PassWord_Set * 10 + Num_Mat%10;
 	mov	__mulint_PARM_2,_PassWord_Set
 	mov	(__mulint_PARM_2 + 1),(_PassWord_Set + 1)
 	mov	dptr,#0x000a
@@ -2171,7 +2178,7 @@ _main:
 	mov	a,r5
 	addc	a,r7
 	mov	(_PassWord_Set + 1),a
-;	Main.c:107: PassWord_Set1_1 = PassWord_Set / 1000;
+;	Main.c:106: PassWord_Set1_1 = PassWord_Set / 1000;
 	mov	__divuint_PARM_2,#0xe8
 	mov	(__divuint_PARM_2 + 1),#0x03
 	mov	dpl,_PassWord_Set
@@ -2179,7 +2186,7 @@ _main:
 	lcall	__divuint
 	mov	_PassWord_Set1_1,dpl
 	mov	(_PassWord_Set1_1 + 1),dph
-;	Main.c:108: PassWord_Set1 = PassWord_Set1 *10 + PassWord_Set1_1;
+;	Main.c:107: PassWord_Set1 = PassWord_Set1 *10 + PassWord_Set1_1;
 	mov	__mulint_PARM_2,_PassWord_Set1
 	mov	(__mulint_PARM_2 + 1),(_PassWord_Set1 + 1)
 	mov	dptr,#0x000a
@@ -2191,7 +2198,7 @@ _main:
 	mov	a,(_PassWord_Set1_1 + 1)
 	addc	a,b
 	mov	(_PassWord_Set1 + 1),a
-;	Main.c:109: PassWord_Set2 = PassWord_Set % 1000;
+;	Main.c:108: PassWord_Set2 = PassWord_Set % 1000;
 	mov	__moduint_PARM_2,#0xe8
 	mov	(__moduint_PARM_2 + 1),#0x03
 	mov	dpl,_PassWord_Set
@@ -2199,23 +2206,23 @@ _main:
 	lcall	__moduint
 	mov	_PassWord_Set2,dpl
 	mov	(_PassWord_Set2 + 1),dph
-;	Main.c:110: PassWord_Set = PassWord_Set2;
+;	Main.c:109: PassWord_Set = PassWord_Set2;
 	mov	_PassWord_Set,_PassWord_Set2
 	mov	(_PassWord_Set + 1),(_PassWord_Set2 + 1)
-;	Main.c:111: cont++;
+;	Main.c:110: cont++;
 	inc	_cont
 	clr	a
-	cjne	a,_cont,00312$
+	cjne	a,_cont,00375$
 	inc	(_cont + 1)
-00312$:
-;	Main.c:113: LCD_ShowNum(2,4,PassWord_Set1,3);
+00375$:
+;	Main.c:112: LCD_ShowNum(2,4,PassWord_Set1,3);
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Set1
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Set1 + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x03
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:114: LCD_ShowNum(2,7,PassWord_Set2,3);
+;	Main.c:113: LCD_ShowNum(2,7,PassWord_Set2,3);
 	mov	_LCD_ShowNum_PARM_2,#0x07
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Set2
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Set2 + 1)
@@ -2223,104 +2230,104 @@ _main:
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
 00107$:
-;	Main.c:118: if(Num_Mat == 11)
+;	Main.c:117: if(Num_Mat == 11)
 	mov	a,#0x0b
 	cjne	a,_Num_Mat,00110$
-;	Main.c:120: LCD_Init(); // 初始化LCD
+;	Main.c:119: LCD_Init(); // 初始化LCD
 	lcall	_LCD_Init
-;	Main.c:122: AT24C02_WriteByte(0,PassWord_Set1 % 256);// 低字节
+;	Main.c:121: AT24C02_WriteByte(0,PassWord_Set1 % 256);// 低字节
 	mov	r6,_PassWord_Set1
 	mov	_AT24C02_WriteByte_PARM_2,r6
 	mov	dpl,#0x00
 	lcall	_AT24C02_WriteByte
-;	Main.c:123: AT24C02_WriteByte(1,PassWord_Set1 / 256);// 高字节
+;	Main.c:122: AT24C02_WriteByte(1,PassWord_Set1 / 256);// 高字节
 	mov	r6,(_PassWord_Set1 + 1)
 	mov	_AT24C02_WriteByte_PARM_2,r6
 	mov	dpl,#0x01
 	lcall	_AT24C02_WriteByte
-;	Main.c:125: AT24C02_WriteByte(2,PassWord_Set2 % 256);// 低字节
+;	Main.c:124: AT24C02_WriteByte(2,PassWord_Set2 % 256);// 低字节
 	mov	r6,_PassWord_Set2
 	mov	_AT24C02_WriteByte_PARM_2,r6
 	mov	dpl,#0x02
 	lcall	_AT24C02_WriteByte
-;	Main.c:126: AT24C02_WriteByte(3,PassWord_Set2 / 256);
+;	Main.c:125: AT24C02_WriteByte(3,PassWord_Set2 / 256);
 	mov	r6,(_PassWord_Set2 + 1)
 	mov	_AT24C02_WriteByte_PARM_2,r6
 	mov	dpl,#0x03
 	lcall	_AT24C02_WriteByte
-;	Main.c:129: LCD_ShowString(2,4,"Success"); // 在LCD上显示字符串
+;	Main.c:126: LCD_ShowString(2,4,"Success"); // 在LCD上显示字符串
 	mov	_LCD_ShowString_PARM_3,#___str_5
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_5 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:130: DelayS(1); // 延时1秒
+;	Main.c:127: DelayS(1); // 延时1秒
 	mov	dptr,#0x0001
 	lcall	_DelayS
-;	Main.c:131: LCD_ShowString(2,1,"              "); // 在LCD上显示空格字符
+;	Main.c:128: LCD_ShowString(2,1,"              "); // 在LCD上显示空格字符
 	mov	_LCD_ShowString_PARM_3,#___str_6
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_6 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:132: LCD_Init(); // 初始化LCD
+;	Main.c:129: LCD_Init(); // 初始化LCD
 	lcall	_LCD_Init
-;	Main.c:133: PassWord_Set = 0; // 清零密码
+;	Main.c:130: PassWord_Set = 0; // 清零密码
 	clr	a
 	mov	_PassWord_Set,a
 	mov	(_PassWord_Set + 1),a
-;	Main.c:134: PassWord_Set1 = 0; // 清零密码
+;	Main.c:131: PassWord_Set1 = 0; // 清零密码
 	mov	_PassWord_Set1,a
 	mov	(_PassWord_Set1 + 1),a
-;	Main.c:135: PassWord_Set2 = 0; // 清零密码
+;	Main.c:132: PassWord_Set2 = 0; // 清零密码
 	mov	_PassWord_Set2,a
 	mov	(_PassWord_Set2 + 1),a
-;	Main.c:136: FLAG = 1; // 设置标志位为1
+;	Main.c:133: FLAG = 1; // 设置标志位为1
 	mov	_FLAG,#0x01
 ;	1-genFromRTrack replaced	mov	(_FLAG + 1),#0x00
 	mov	(_FLAG + 1),a
-;	Main.c:137: cont = 0; // 计数清零
+;	Main.c:134: cont = 0; // 计数清零
 	mov	_cont,a
 	mov	(_cont + 1),a
-;	Main.c:138: K1 = 0; // K1计数清零
+;	Main.c:135: K1 = 0; // K1计数清零
 	mov	_K1,a
 	mov	(_K1 + 1),a
-;	Main.c:139: FLAG_M = 0; // 状态标志位清零
+;	Main.c:136: FLAG_M = 0; // 状态标志位清零
 	mov	_FLAG_M,a
 	mov	(_FLAG_M + 1),a
-;	Main.c:140: break; // 退出循环
+;	Main.c:137: break; // 退出循环
 	sjmp	00117$
 00110$:
-;	Main.c:143: if(Num_Mat == 12)
+;	Main.c:140: if(Num_Mat == 12)
 	mov	a,#0x0c
-	cjne	a,_Num_Mat,00315$
-	sjmp	00316$
-00315$:
+	cjne	a,_Num_Mat,00378$
+	sjmp	00379$
+00378$:
 	ljmp	00114$
-00316$:
-;	Main.c:145: cont = 0; // 计数清零
+00379$:
+;	Main.c:142: cont = 0; // 计数清零
 	clr	a
 	mov	_cont,a
 	mov	(_cont + 1),a
-;	Main.c:146: PassWord_Set = 0; // 清零密码
+;	Main.c:143: PassWord_Set = 0; // 清零密码
 	mov	_PassWord_Set,a
 	mov	(_PassWord_Set + 1),a
-;	Main.c:147: PassWord_Set1 = 0; // 清零密码
+;	Main.c:144: PassWord_Set1 = 0; // 清零密码
 	mov	_PassWord_Set1,a
 	mov	(_PassWord_Set1 + 1),a
-;	Main.c:148: PassWord_Set2 = 0;
+;	Main.c:145: PassWord_Set2 = 0;
 	mov	_PassWord_Set2,a
 	mov	(_PassWord_Set2 + 1),a
-;	Main.c:149: LCD_ShowNum(2,4,PassWord_Set1,3);
+;	Main.c:146: LCD_ShowNum(2,4,PassWord_Set1,3);
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,a
 	mov	(_LCD_ShowNum_PARM_3 + 1),a
 	mov	_LCD_ShowNum_PARM_4,#0x03
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:150: LCD_ShowNum(2,7,PassWord_Set2,3);// 在LCD上显示数字
+;	Main.c:147: LCD_ShowNum(2,7,PassWord_Set2,3);// 在LCD上显示数字
 	mov	_LCD_ShowNum_PARM_2,#0x07
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Set2
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Set2 + 1)
@@ -2329,40 +2336,26 @@ _main:
 	lcall	_LCD_ShowNum
 	ljmp	00114$
 00117$:
-;	Main.c:158: Num_Mat = MatrKey();
+;	Main.c:152: Num_Mat = MatrKey();
 	lcall	_MatrKey
 	mov	_Num_Mat,dpl
-;	Main.c:160: if(FLAG == 1)
+;	Main.c:154: if(FLAG == 1)
 	mov	a,#0x01
-	cjne	a,_FLAG,00317$
+	cjne	a,_FLAG,00380$
 	dec	a
-	cjne	a,(_FLAG + 1),00317$
-	sjmp	00318$
-00317$:
-	ljmp	00174$
-00318$:
-;	Main.c:162: LCD_ShowString(2,1,"PD:");
+	cjne	a,(_FLAG + 1),00380$
+	sjmp	00381$
+00380$:
+	ljmp	00193$
+00381$:
+;	Main.c:156: LCD_ShowString(2,1,"PD:");
 	mov	_LCD_ShowString_PARM_3,#___str_4
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_4 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:163: LCD_ShowString(1,9,"DOOR:");
-	mov	_LCD_ShowString_PARM_3,#___str_7
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_7 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x09
-	mov	dpl,#0x01
-	lcall	_LCD_ShowString
-;	Main.c:164: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
-	mov	_LCD_ShowString_PARM_3,#___str_8
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_8 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x0e
-	mov	dpl,#0x01
-	lcall	_LCD_ShowString
-;	Main.c:167: PassWord1 = (AT24C02_ReadByte(0)|AT24C02_ReadByte(1) << 8); // 读取EEPROM中的密码
+;	Main.c:160: PassWord1 = (AT24C02_ReadByte(0)|AT24C02_ReadByte(1) << 8); // 读取EEPROM中的密码
 	mov	dpl,#0x00
 	lcall	_AT24C02_ReadByte
 	mov	r7,dpl
@@ -2379,7 +2372,7 @@ _main:
 	mov	a,r5
 	orl	a,r4
 	mov	(_PassWord1 + 1),a
-;	Main.c:168: PassWord2 = (AT24C02_ReadByte(2)|AT24C02_ReadByte(3) << 8); 
+;	Main.c:161: PassWord2 = (AT24C02_ReadByte(2)|AT24C02_ReadByte(3) << 8); 
 	mov	dpl,#0x02
 	lcall	_AT24C02_ReadByte
 	mov	r7,dpl
@@ -2390,69 +2383,112 @@ _main:
 	pop	ar7
 	mov	ar5,r6
 	clr	a
-	mov	r6,a
 	mov	r4,a
 	orl	a,r7
 	mov	_PassWord2,a
 	mov	a,r5
 	orl	a,r4
 	mov	(_PassWord2 + 1),a
-;	Main.c:170: if(Num_Mat == 13)
+;	Main.c:163: if(Num_Mat == 13)
 	mov	a,#0x0d
 	cjne	a,_Num_Mat,00119$
-;	Main.c:172: FLAG_M = 1;
-	mov	_FLAG_M,#0x01
-	mov	(_FLAG_M + 1),#0x00
+;	Main.c:165: FLAG_M++;
+	inc	_FLAG_M
+	clr	a
+	cjne	a,_FLAG_M,00384$
+	inc	(_FLAG_M + 1)
+00384$:
 00119$:
-;	Main.c:174: if(Num_Mat == 14)
-	mov	a,#0x0e
-	cjne	a,_Num_Mat,00121$
-;	Main.c:175: FLAG_M = 0; // 状态标志位清零
+;	Main.c:167: if(FLAG_M > 100)
+	clr	c
+	mov	a,#0x64
+	subb	a,_FLAG_M
+	clr	a
+	subb	a,(_FLAG_M + 1)
+	jnc	00121$
+;	Main.c:169: FLAG_M = 0;
 	clr	a
 	mov	_FLAG_M,a
 	mov	(_FLAG_M + 1),a
 00121$:
-;	Main.c:176: if(FLAG_M == 1)
+;	Main.c:171: if(FLAG_M%2 == 1)
 	mov	a,#0x01
-	cjne	a,_FLAG_M,00323$
-	dec	a
-	cjne	a,(_FLAG_M + 1),00323$
-	sjmp	00324$
-00323$:
-	ljmp	00169$
-00324$:
-;	Main.c:178: LCD_ShowString(1,1,"MODE:M"); // 在LCD上显示字符串
+	anl	a,_FLAG_M
+	mov	r6,a
+	mov	r7,#0x00
+	cjne	r6,#0x01,00386$
+	cjne	r7,#0x00,00386$
+	sjmp	00387$
+00386$:
+	ljmp	00188$
+00387$:
+;	Main.c:173: LCD_ShowString(1,9,"     ");
+	mov	_LCD_ShowString_PARM_3,#___str_7
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_7 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x09
+	mov	dpl,#0x01
+	lcall	_LCD_ShowString
+;	Main.c:174: LCD_ShowString(1,14," ");
+	mov	_LCD_ShowString_PARM_3,#___str_8
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_8 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x0e
+	mov	dpl,#0x01
+	lcall	_LCD_ShowString
+;	Main.c:175: LCD_ShowString(2,15,"  ");
 	mov	_LCD_ShowString_PARM_3,#___str_9
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_9 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x0f
+	mov	dpl,#0x02
+	lcall	_LCD_ShowString
+;	Main.c:176: LCD_ShowString(2,9," "); // 在LCD上显示字符串
+	mov	_LCD_ShowString_PARM_3,#___str_8
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_8 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x09
+	mov	dpl,#0x02
+	lcall	_LCD_ShowString
+;	Main.c:179: LCD_ShowString(2,1,"PD:");
+	mov	_LCD_ShowString_PARM_3,#___str_4
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_4 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x01
+	mov	dpl,#0x02
+	lcall	_LCD_ShowString
+;	Main.c:180: LCD_ShowString(1,1,"MODE:M"); // 在LCD上显示字符串
+	mov	_LCD_ShowString_PARM_3,#___str_10
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_10 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
-;	Main.c:179: if(Num_Mat != 0 && Num_Mat <= 10)
+;	Main.c:181: if(Num_Mat != 0 && Num_Mat <= 10)
 	mov	a,_Num_Mat
-	jnz	00325$
+	jnz	00388$
 	ljmp	00132$
-00325$:
+00388$:
 	mov	a,_Num_Mat
 	add	a,#0xff - 0x0a
-	jnc	00326$
+	jnc	00389$
 	ljmp	00132$
-00326$:
-;	Main.c:182: if(cont < 5)
+00389$:
+;	Main.c:184: if(cont < 5)
 	clr	c
 	mov	a,_cont
 	subb	a,#0x05
 	mov	a,(_cont + 1)
 	subb	a,#0x00
 	jnc	00123$
-;	Main.c:184: PassWord_Ent *= 10;
+;	Main.c:186: PassWord_Ent *= 10;
 	mov	__mulint_PARM_2,_PassWord_Ent
 	mov	(__mulint_PARM_2 + 1),(_PassWord_Ent + 1)
 	mov	dptr,#0x000a
 	lcall	__mulint
 	mov	_PassWord_Ent,dpl
 	mov	(_PassWord_Ent + 1),dph
-;	Main.c:185: PassWord_Ent += Num_Mat%10; // 更新密码值
+;	Main.c:187: PassWord_Ent += Num_Mat%10; // 更新密码值
 	mov	r6,_Num_Mat
 	mov	r7,#0x00
 	mov	__modsint_PARM_2,#0x0a
@@ -2469,268 +2505,370 @@ _main:
 	mov	a,r7
 	addc	a,(_PassWord_Ent + 1)
 	mov	(_PassWord_Ent + 1),a
-;	Main.c:186: cont++; // 计数加一
+;	Main.c:188: cont++; // 计数加一
 	inc	_cont
 	clr	a
-	cjne	a,_cont,00328$
+	cjne	a,_cont,00391$
 	inc	(_cont + 1)
-00328$:
+00391$:
 00123$:
-;	Main.c:188: LCD_ShowNum(2,4,PassWord_Ent,5); // 在LCD上显示数字
+;	Main.c:190: LCD_ShowNum(2,4,PassWord_Ent,5); // 在LCD上显示数字
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x05
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:189: DelayMs(700);
+;	Main.c:191: DelayMs(700);
 	mov	dptr,#0x02bc
 	lcall	_DelayMs
-;	Main.c:191: switch(cont)
+;	Main.c:193: switch(cont)
 	clr	c
 	mov	a,#0x05
 	subb	a,_cont
 	clr	a
 	subb	a,(_cont + 1)
-	jnc	00329$
+	jnc	00392$
 	ljmp	00132$
-00329$:
+00392$:
 	mov	a,_cont
 	mov	b,#0x03
 	mul	ab
-	mov	dptr,#00330$
+	mov	dptr,#00393$
 	jmp	@a+dptr
-00330$:
+00393$:
 	ljmp	00124$
 	ljmp	00125$
 	ljmp	00126$
 	ljmp	00127$
 	ljmp	00128$
 	ljmp	00129$
-;	Main.c:193: case 0:LCD_ShowString(2,4,"00000");break;
+;	Main.c:195: case 0:LCD_ShowString(2,4,"00000");break;
 00124$:
-	mov	_LCD_ShowString_PARM_3,#___str_10
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_10 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x04
-	mov	dpl,#0x02
-	lcall	_LCD_ShowString
-;	Main.c:194: case 1:LCD_ShowString(2,4,"0000*");break;
-	sjmp	00132$
-00125$:
 	mov	_LCD_ShowString_PARM_3,#___str_11
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_11 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:195: case 2:LCD_ShowString(2,4,"000**");break;
+;	Main.c:196: case 1:LCD_ShowString(2,4,"0000*");break;
 	sjmp	00132$
-00126$:
+00125$:
 	mov	_LCD_ShowString_PARM_3,#___str_12
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_12 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:196: case 3:LCD_ShowString(2,4,"00***");break;
+;	Main.c:197: case 2:LCD_ShowString(2,4,"000**");break;
 	sjmp	00132$
-00127$:
+00126$:
 	mov	_LCD_ShowString_PARM_3,#___str_13
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_13 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:197: case 4:LCD_ShowString(2,4,"0****");break;
+;	Main.c:198: case 3:LCD_ShowString(2,4,"00***");break;
 	sjmp	00132$
-00128$:
+00127$:
 	mov	_LCD_ShowString_PARM_3,#___str_14
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_14 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:198: case 5:LCD_ShowString(2,4,"*****");break;
+;	Main.c:199: case 4:LCD_ShowString(2,4,"0****");break;
 	sjmp	00132$
-00129$:
+00128$:
 	mov	_LCD_ShowString_PARM_3,#___str_15
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_15 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:199: }
-00132$:
-;	Main.c:203: if(Num_Mat == 11)
-	mov	a,#0x0b
-	cjne	a,_Num_Mat,00331$
-	sjmp	00332$
-00331$:
-	ljmp	00140$
-00332$:
-;	Main.c:206: if(PassWord_Ent == 33333)
-	mov	a,#0x35
-	cjne	a,_PassWord_Ent,00135$
-	mov	a,#0x82
-	cjne	a,(_PassWord_Ent + 1),00135$
-;	Main.c:208: cont = 0; // 计数清零
-	clr	a
-	mov	_cont,a
-	mov	(_cont + 1),a
-;	Main.c:209: PassWord_Ent = 0; // 清零密码
-	mov	_PassWord_Ent,a
-	mov	(_PassWord_Ent + 1),a
-;	Main.c:210: LCD_ShowNum(2,4,PassWord_Ent,4); // 在LCD上显示数字
-	mov	_LCD_ShowNum_PARM_2,#0x04
-	mov	_LCD_ShowNum_PARM_3,a
-	mov	(_LCD_ShowNum_PARM_3 + 1),a
-	mov	_LCD_ShowNum_PARM_4,#0x04
-	mov	dpl,#0x02
-	lcall	_LCD_ShowNum
-;	Main.c:211: LCD_ShowString(1,14,"O"); // 在LCD上显示字符串
+;	Main.c:200: case 5:LCD_ShowString(2,4,"*****");break;
+	sjmp	00132$
+00129$:
 	mov	_LCD_ShowString_PARM_3,#___str_16
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_16 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x0e
-	mov	dpl,#0x01
-	lcall	_LCD_ShowString
-;	Main.c:212: DelayS(2); // 延时2秒
-	mov	dptr,#0x0002
-	lcall	_DelayS
-;	Main.c:213: FLAG_D = 1; // 门状态标志位为1
-	mov	_FLAG_D,#0x01
-	mov	(_FLAG_D + 1),#0x00
-;	Main.c:214: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
-	mov	_LCD_ShowString_PARM_3,#___str_8
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_8 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x0e
-	mov	dpl,#0x01
-	lcall	_LCD_ShowString
-00135$:
-;	Main.c:216: if(PassWord_Ent != 33333 && PassWord_Ent != 0)
-	mov	a,#0x35
-	cjne	a,_PassWord_Ent,00335$
-	mov	a,#0x82
-	cjne	a,(_PassWord_Ent + 1),00335$
-	sjmp	00140$
-00335$:
-	mov	a,_PassWord_Ent
-	orl	a,(_PassWord_Ent + 1)
-	jz	00140$
-;	Main.c:218: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
-	mov	_LCD_ShowString_PARM_3,#___str_8
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_8 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x0e
-	mov	dpl,#0x01
-	lcall	_LCD_ShowString
-;	Main.c:220: PassWord_Ent = 0; // 清零密码
-	clr	a
-	mov	_PassWord_Ent,a
-	mov	(_PassWord_Ent + 1),a
-;	Main.c:221: LCD_ShowNum(2,4,PassWord_Ent,5); // 在LCD上显示数字
-	mov	_LCD_ShowNum_PARM_2,#0x04
-	mov	_LCD_ShowNum_PARM_3,a
-	mov	(_LCD_ShowNum_PARM_3 + 1),a
-	mov	_LCD_ShowNum_PARM_4,#0x05
-	mov	dpl,#0x02
-	lcall	_LCD_ShowNum
-;	Main.c:222: cont = 0; // 计数清零
-	clr	a
-	mov	_cont,a
-	mov	(_cont + 1),a
-;	Main.c:223: FLAG_F++;
-	inc	_FLAG_F
-;	genFromRTrack removed	clr	a
-	cjne	a,_FLAG_F,00337$
-	inc	(_FLAG_F + 1)
-00337$:
-00140$:
-;	Main.c:227: if(Num_Mat == 12)
-	mov	a,#0x0c
-	cjne	a,_Num_Mat,00142$
-;	Main.c:229: cont = 0; // 计数清零
-	clr	a
-	mov	_cont,a
-	mov	(_cont + 1),a
-;	Main.c:230: PassWord_Ent = 0; // 清零密码
-	mov	_PassWord_Ent,a
-	mov	(_PassWord_Ent + 1),a
-;	Main.c:231: LCD_ShowNum(2,4,PassWord_Ent,5); // 在LCD上显示数字
-	mov	_LCD_ShowNum_PARM_2,#0x04
-	mov	_LCD_ShowNum_PARM_3,a
-	mov	(_LCD_ShowNum_PARM_3 + 1),a
-	mov	_LCD_ShowNum_PARM_4,#0x05
-	mov	dpl,#0x02
-	lcall	_LCD_ShowNum
-00142$:
-;	Main.c:233: if(Num_Mat == 16)
-	mov	a,#0x10
-	cjne	a,_Num_Mat,00340$
-	sjmp	00341$
-00340$:
-	ljmp	00174$
-00341$:
-;	Main.c:236: AT24C02_WriteByte(0,PassWord_Set1 % 256);// 低字节
-	mov	r6,_PassWord_Set1
-	mov	_AT24C02_WriteByte_PARM_2,r6
-	mov	dpl,#0x00
-	lcall	_AT24C02_WriteByte
-;	Main.c:237: AT24C02_WriteByte(1,PassWord_Set1 / 256);// 高字节
-	mov	r6,(_PassWord_Set1 + 1)
-	mov	_AT24C02_WriteByte_PARM_2,r6
-	mov	dpl,#0x01
-	lcall	_AT24C02_WriteByte
-;	Main.c:239: AT24C02_WriteByte(2,PassWord_Set2 % 256);// 低字节
-	mov	r6,_PassWord_Set2
-	mov	_AT24C02_WriteByte_PARM_2,r6
-	mov	dpl,#0x02
-	lcall	_AT24C02_WriteByte
-;	Main.c:240: AT24C02_WriteByte(3,PassWord_Set2 / 256);
-	mov	r6,(_PassWord_Set2 + 1)
-	mov	_AT24C02_WriteByte_PARM_2,r6
-	mov	dpl,#0x03
-	lcall	_AT24C02_WriteByte
-;	Main.c:241: LCD_ShowString(2,4,"PasswordDel OK");
-	mov	_LCD_ShowString_PARM_3,#___str_17
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_17 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:242: LCD_Init();
-	lcall	_LCD_Init
-	ljmp	00174$
-00169$:
-;	Main.c:248: LCD_ShowString(1,1,"MODE:E"); // 在LCD上显示字符串
+;	Main.c:201: }
+00132$:
+;	Main.c:205: if(Num_Mat == 11)
+	mov	a,#0x0b
+	cjne	a,_Num_Mat,00394$
+	sjmp	00395$
+00394$:
+	ljmp	00154$
+00395$:
+;	Main.c:208: if(PassWord_Ent == 33333)
+	mov	a,#0x35
+	cjne	a,_PassWord_Ent,00396$
+	mov	a,#0x82
+	cjne	a,(_PassWord_Ent + 1),00396$
+	sjmp	00397$
+00396$:
+	ljmp	00154$
+00397$:
+;	Main.c:211: cont = 0; // 计数清零
+	clr	a
+	mov	_cont,a
+	mov	(_cont + 1),a
+;	Main.c:212: PassWord_Ent = 0; // 清零密码
+	mov	_PassWord_Ent,a
+	mov	(_PassWord_Ent + 1),a
+;	Main.c:218: while(1)
+00149$:
+;	Main.c:221: Num_Mat = MatrKey(); // 获取矩阵键盘按键值
+	lcall	_MatrKey
+	mov	_Num_Mat,dpl
+;	Main.c:222: if(Num_Mat == 14)
+	mov	a,#0x0e
+	cjne	a,_Num_Mat,00135$
+;	Main.c:224: i++;
+	inc	_main_i_458752_151
+	clr	a
+	cjne	a,_main_i_458752_151,00400$
+	inc	(_main_i_458752_151 + 1)
+00400$:
+00135$:
+;	Main.c:226: if(i > 2)
+	clr	c
+	mov	a,#0x02
+	subb	a,_main_i_458752_151
+	clr	a
+	subb	a,(_main_i_458752_151 + 1)
+	jnc	00137$
+;	Main.c:228: i = 0;
+	clr	a
+	mov	_main_i_458752_151,a
+	mov	(_main_i_458752_151 + 1),a
+00137$:
+;	Main.c:230: switch (i)
+	clr	a
+	cjne	a,_main_i_458752_151,00402$
+	cjne	a,(_main_i_458752_151 + 1),00402$
+	sjmp	00138$
+00402$:
+	mov	a,#0x01
+	cjne	a,_main_i_458752_151,00403$
+	dec	a
+	cjne	a,(_main_i_458752_151 + 1),00403$
+	sjmp	00139$
+00403$:
+	mov	a,#0x02
+	cjne	a,_main_i_458752_151,00404$
+	clr	a
+	cjne	a,(_main_i_458752_151 + 1),00404$
+	sjmp	00140$
+00404$:
+;	Main.c:232: case 0:LCD_ShowString(1,10,"DEL PD");break;
+	sjmp	00141$
+00138$:
+	mov	_LCD_ShowString_PARM_3,#___str_17
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_17 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x0a
+	mov	dpl,#0x01
+	lcall	_LCD_ShowString
+;	Main.c:233: case 1:LCD_ShowString(1,10,"RES PD");break;
+	sjmp	00141$
+00139$:
 	mov	_LCD_ShowString_PARM_3,#___str_18
 	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_18 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x0a
+	mov	dpl,#0x01
+	lcall	_LCD_ShowString
+;	Main.c:234: case 2:LCD_ShowString(1,10,"OPE DR");break;
+	sjmp	00141$
+00140$:
+	mov	_LCD_ShowString_PARM_3,#___str_19
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_19 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x0a
+	mov	dpl,#0x01
+	lcall	_LCD_ShowString
+;	Main.c:235: }
+00141$:
+;	Main.c:236: if(Num_Mat == 15)
+	mov	a,#0x0f
+	cjne	a,_Num_Mat,00405$
+	sjmp	00406$
+00405$:
+	ljmp	00149$
+00406$:
+;	Main.c:238: switch (i)
+	clr	a
+	cjne	a,_main_i_458752_151,00407$
+	cjne	a,(_main_i_458752_151 + 1),00407$
+	sjmp	00142$
+00407$:
+	mov	a,#0x01
+	cjne	a,_main_i_458752_151,00408$
+	dec	a
+	cjne	a,(_main_i_458752_151 + 1),00408$
+	sjmp	00143$
+00408$:
+	mov	a,#0x02
+	cjne	a,_main_i_458752_151,00409$
+	clr	a
+	cjne	a,(_main_i_458752_151 + 1),00409$
+	sjmp	00144$
+00409$:
+	ljmp	00154$
+;	Main.c:240: case 0:AT24C02_WriteByte(0,0);AT24C02_WriteByte(1,0);AT24C02_WriteByte(2,0);AT24C02_WriteByte(3,0);LCD_ShowString(2,4,"PdDel OK");DelayMs(500);LCD_Init();break;
+00142$:
+	mov	_AT24C02_WriteByte_PARM_2,#0x00
+	mov	dpl,#0x00
+	lcall	_AT24C02_WriteByte
+	mov	_AT24C02_WriteByte_PARM_2,#0x00
+	mov	dpl,#0x01
+	lcall	_AT24C02_WriteByte
+	mov	_AT24C02_WriteByte_PARM_2,#0x00
+	mov	dpl,#0x02
+	lcall	_AT24C02_WriteByte
+	mov	_AT24C02_WriteByte_PARM_2,#0x00
+	mov	dpl,#0x03
+	lcall	_AT24C02_WriteByte
+	mov	_LCD_ShowString_PARM_3,#___str_20
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_20 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x04
+	mov	dpl,#0x02
+	lcall	_LCD_ShowString
+	mov	dptr,#0x01f4
+	lcall	_DelayMs
+	lcall	_LCD_Init
+;	Main.c:241: case 1:AT24C02_WriteByte(4,0);LCD_ShowString(2,4,"RESET OK");DelayMs(1000);LCD_Init();break;
+	sjmp	00154$
+00143$:
+	mov	_AT24C02_WriteByte_PARM_2,#0x00
+	mov	dpl,#0x04
+	lcall	_AT24C02_WriteByte
+	mov	_LCD_ShowString_PARM_3,#___str_21
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_21 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x04
+	mov	dpl,#0x02
+	lcall	_LCD_ShowString
+	mov	dptr,#0x03e8
+	lcall	_DelayMs
+	lcall	_LCD_Init
+;	Main.c:242: case 2:FLAG_D = 1;LCD_ShowString(1,9,"DOOR:");LCD_ShowString(1,14,"O ");DelayMs(1000);LCD_Init();break;
+	sjmp	00154$
+00144$:
+	mov	_FLAG_D,#0x01
+	mov	(_FLAG_D + 1),#0x00
+	mov	_LCD_ShowString_PARM_3,#___str_22
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_22 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x09
+	mov	dpl,#0x01
+	lcall	_LCD_ShowString
+	mov	_LCD_ShowString_PARM_3,#___str_23
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_23 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x0e
+	mov	dpl,#0x01
+	lcall	_LCD_ShowString
+	mov	dptr,#0x03e8
+	lcall	_DelayMs
+	lcall	_LCD_Init
+;	Main.c:244: break;
+00154$:
+;	Main.c:250: if(Num_Mat == 12)
+	mov	a,#0x0c
+	cjne	a,_Num_Mat,00410$
+	sjmp	00411$
+00410$:
+	ljmp	00193$
+00411$:
+;	Main.c:252: cont = 0; // 计数清零
+	clr	a
+	mov	_cont,a
+	mov	(_cont + 1),a
+;	Main.c:253: PassWord_Ent = 0; // 清零密码
+	mov	_PassWord_Ent,a
+	mov	(_PassWord_Ent + 1),a
+;	Main.c:254: LCD_ShowNum(2,4,PassWord_Ent,5); // 在LCD上显示数字
+	mov	_LCD_ShowNum_PARM_2,#0x04
+	mov	_LCD_ShowNum_PARM_3,a
+	mov	(_LCD_ShowNum_PARM_3 + 1),a
+	mov	_LCD_ShowNum_PARM_4,#0x05
+	mov	dpl,#0x02
+	lcall	_LCD_ShowNum
+	ljmp	00193$
+00188$:
+;	Main.c:261: LCD_ShowString(1,9,"DOOR:");
+	mov	_LCD_ShowString_PARM_3,#___str_22
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_22 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x09
+	mov	dpl,#0x01
+	lcall	_LCD_ShowString
+;	Main.c:262: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+	mov	_LCD_ShowString_PARM_3,#___str_24
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_24 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x0e
+	mov	dpl,#0x01
+	lcall	_LCD_ShowString
+;	Main.c:263: if(AT24C02_ReadByte(4))
+	mov	dpl,#0x04
+	lcall	_AT24C02_ReadByte
+	mov	a,dpl
+	jz	00158$
+;	Main.c:265: FLAG_E = 0;
+	clr	a
+	mov	_FLAG_E,a
+	mov	(_FLAG_E + 1),a
+	sjmp	00159$
+00158$:
+;	Main.c:269: FLAG_E = 1;
+	mov	_FLAG_E,#0x01
+	mov	(_FLAG_E + 1),#0x00
+00159$:
+;	Main.c:271: if(FLAG_E == 1)
+	mov	a,#0x01
+	cjne	a,_FLAG_E,00413$
+	dec	a
+	cjne	a,(_FLAG_E + 1),00413$
+	sjmp	00414$
+00413$:
+	ljmp	00184$
+00414$:
+;	Main.c:273: LCD_ShowString(1,1,"MODE:E"); // 在LCD上显示字符串
+	mov	_LCD_ShowString_PARM_3,#___str_25
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_25 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x01
 	mov	dpl,#0x01
 	lcall	_LCD_ShowString
-;	Main.c:250: if(Num_Mat != 0 && Num_Mat <= 10)
+;	Main.c:275: if(Num_Mat != 0 && Num_Mat <= 10)
 	mov	a,_Num_Mat
-	jnz	00342$
-	ljmp	00156$
-00342$:
+	jnz	00415$
+	ljmp	00171$
+00415$:
 	mov	a,_Num_Mat
 	add	a,#0xff - 0x0a
-	jnc	00343$
-	ljmp	00156$
-00343$:
-;	Main.c:254: if (cont < 6)
+	jnc	00416$
+	ljmp	00171$
+00416$:
+;	Main.c:279: if (cont < 6)
 	clr	c
 	mov	a,_cont
 	subb	a,#0x06
 	mov	a,(_cont + 1)
 	subb	a,#0x00
-	jc	00344$
-	ljmp	00146$
-00344$:
-;	Main.c:256: PassWord_Ent = PassWord_Ent * 10 + Num_Mat%10;
+	jc	00417$
+	ljmp	00161$
+00417$:
+;	Main.c:281: PassWord_Ent = PassWord_Ent * 10 + Num_Mat%10;
 	mov	__mulint_PARM_2,_PassWord_Ent
 	mov	(__mulint_PARM_2 + 1),(_PassWord_Ent + 1)
 	mov	dptr,#0x000a
@@ -2757,7 +2895,7 @@ _main:
 	mov	a,r5
 	addc	a,r7
 	mov	(_PassWord_Ent + 1),a
-;	Main.c:257: PassWord_Ent1_1 = PassWord_Ent / 1000;
+;	Main.c:282: PassWord_Ent1_1 = PassWord_Ent / 1000;
 	mov	__divuint_PARM_2,#0xe8
 	mov	(__divuint_PARM_2 + 1),#0x03
 	mov	dpl,_PassWord_Ent
@@ -2765,7 +2903,7 @@ _main:
 	lcall	__divuint
 	mov	_PassWord_Ent1_1,dpl
 	mov	(_PassWord_Ent1_1 + 1),dph
-;	Main.c:258: PassWord_Ent1 = PassWord_Ent1 *10 + PassWord_Ent1_1;
+;	Main.c:283: PassWord_Ent1 = PassWord_Ent1 *10 + PassWord_Ent1_1;
 	mov	__mulint_PARM_2,_PassWord_Ent1
 	mov	(__mulint_PARM_2 + 1),(_PassWord_Ent1 + 1)
 	mov	dptr,#0x000a
@@ -2777,7 +2915,7 @@ _main:
 	mov	a,(_PassWord_Ent1_1 + 1)
 	addc	a,b
 	mov	(_PassWord_Ent1 + 1),a
-;	Main.c:259: PassWord_Ent2 = PassWord_Ent % 1000;
+;	Main.c:284: PassWord_Ent2 = PassWord_Ent % 1000;
 	mov	__moduint_PARM_2,#0xe8
 	mov	(__moduint_PARM_2 + 1),#0x03
 	mov	dpl,_PassWord_Ent
@@ -2785,222 +2923,152 @@ _main:
 	lcall	__moduint
 	mov	_PassWord_Ent2,dpl
 	mov	(_PassWord_Ent2 + 1),dph
-;	Main.c:260: PassWord_Ent = PassWord_Ent2;
+;	Main.c:285: PassWord_Ent = PassWord_Ent2;
 	mov	_PassWord_Ent,_PassWord_Ent2
 	mov	(_PassWord_Ent + 1),(_PassWord_Ent2 + 1)
-;	Main.c:261: cont++;
+;	Main.c:286: cont++;
 	inc	_cont
 	clr	a
-	cjne	a,_cont,00345$
+	cjne	a,_cont,00418$
 	inc	(_cont + 1)
-00345$:
-;	Main.c:263: LCD_ShowNum(2,4,PassWord_Ent1,3);
+00418$:
+;	Main.c:288: LCD_ShowNum(2,4,PassWord_Ent1,3);
 	mov	_LCD_ShowNum_PARM_2,#0x04
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent1
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent1 + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x03
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:264: LCD_ShowNum(2,7,PassWord_Ent2,3);
+;	Main.c:289: LCD_ShowNum(2,7,PassWord_Ent2,3);
 	mov	_LCD_ShowNum_PARM_2,#0x07
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent2
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent2 + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x03
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-00146$:
-;	Main.c:266: DelayMs(700);
+00161$:
+;	Main.c:291: DelayMs(700);
 	mov	dptr,#0x02bc
 	lcall	_DelayMs
-;	Main.c:268: switch(cont)
+;	Main.c:293: switch(cont)
 	clr	c
 	mov	a,#0x06
 	subb	a,_cont
 	clr	a
 	subb	a,(_cont + 1)
-	jnc	00346$
-	ljmp	00156$
-00346$:
+	jnc	00419$
+	ljmp	00171$
+00419$:
 	mov	a,_cont
 	mov	b,#0x03
 	mul	ab
-	mov	dptr,#00347$
+	mov	dptr,#00420$
 	jmp	@a+dptr
-00347$:
-	ljmp	00147$
-	ljmp	00148$
-	ljmp	00149$
-	ljmp	00150$
-	ljmp	00151$
-	ljmp	00152$
-	ljmp	00153$
-;	Main.c:270: case 0:LCD_ShowString(2,4,"000000");break;
-00147$:
-	mov	_LCD_ShowString_PARM_3,#___str_19
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_19 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x04
-	mov	dpl,#0x02
-	lcall	_LCD_ShowString
-;	Main.c:271: case 1:LCD_ShowString(2,4,"00000*");break;
-	sjmp	00156$
-00148$:
-	mov	_LCD_ShowString_PARM_3,#___str_20
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_20 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x04
-	mov	dpl,#0x02
-	lcall	_LCD_ShowString
-;	Main.c:272: case 2:LCD_ShowString(2,4,"0000**");break;
-	sjmp	00156$
-00149$:
-	mov	_LCD_ShowString_PARM_3,#___str_21
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_21 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x04
-	mov	dpl,#0x02
-	lcall	_LCD_ShowString
-;	Main.c:273: case 3:LCD_ShowString(2,4,"000***");break;
-	sjmp	00156$
-00150$:
-	mov	_LCD_ShowString_PARM_3,#___str_22
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_22 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x04
-	mov	dpl,#0x02
-	lcall	_LCD_ShowString
-;	Main.c:274: case 4:LCD_ShowString(2,4,"00****");break;
-	sjmp	00156$
-00151$:
-	mov	_LCD_ShowString_PARM_3,#___str_23
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_23 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x04
-	mov	dpl,#0x02
-	lcall	_LCD_ShowString
-;	Main.c:275: case 5:LCD_ShowString(2,4,"0*****");break;
-	sjmp	00156$
-00152$:
-	mov	_LCD_ShowString_PARM_3,#___str_24
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_24 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x04
-	mov	dpl,#0x02
-	lcall	_LCD_ShowString
-;	Main.c:276: case 6:LCD_ShowString(2,4,"******");break;
-	sjmp	00156$
-00153$:
-	mov	_LCD_ShowString_PARM_3,#___str_25
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_25 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x04
-	mov	dpl,#0x02
-	lcall	_LCD_ShowString
-;	Main.c:277: }
-00156$:
-;	Main.c:280: if(Num_Mat == 11)
-	mov	a,#0x0b
-	cjne	a,_Num_Mat,00348$
-	sjmp	00349$
-00348$:
+00420$:
+	ljmp	00162$
 	ljmp	00163$
-00349$:
-;	Main.c:283: if(PassWord1 == PassWord_Ent1 && PassWord2 == PassWord_Ent2)
-	mov	a,_PassWord_Ent1
-	cjne	a,_PassWord1,00159$
-	mov	a,(_PassWord_Ent1 + 1)
-	cjne	a,(_PassWord1 + 1),00159$
-	mov	a,_PassWord_Ent2
-	cjne	a,_PassWord2,00159$
-	mov	a,(_PassWord_Ent2 + 1)
-	cjne	a,(_PassWord2 + 1),00159$
-;	Main.c:285: LCD_ShowString(1,14,"O"); // 在LCD上显示字符串
-	mov	_LCD_ShowString_PARM_3,#___str_16
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_16 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x0e
-	mov	dpl,#0x01
-	lcall	_LCD_ShowString
-;	Main.c:287: cont = 0; // 计数清零
-	clr	a
-	mov	_cont,a
-	mov	(_cont + 1),a
-;	Main.c:288: PassWord_Ent = 0; // 清零密码
-	mov	_PassWord_Ent,a
-	mov	(_PassWord_Ent + 1),a
-;	Main.c:289: PassWord_Ent1 = 0; // 清零密码
-	mov	_PassWord_Ent1,a
-	mov	(_PassWord_Ent1 + 1),a
-;	Main.c:290: PassWord_Ent2 = 0; // 清零密码
-	mov	_PassWord_Ent2,a
-	mov	(_PassWord_Ent2 + 1),a
-;	Main.c:291: DelayS(2); // 延时2秒
-	mov	dptr,#0x0002
-	lcall	_DelayS
-;	Main.c:292: FLAG_D = 1; // 门状态标志位为1
-	mov	_FLAG_D,#0x01
-	mov	(_FLAG_D + 1),#0x00
-;	Main.c:293: LCD_ShowNum(2,4,PassWord_Ent1,3);
-	mov	_LCD_ShowNum_PARM_2,#0x04
-	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent1
-	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent1 + 1)
-	mov	_LCD_ShowNum_PARM_4,#0x03
-	mov	dpl,#0x02
-	lcall	_LCD_ShowNum
-;	Main.c:294: LCD_ShowNum(2,7,PassWord_Ent2,3);
-	mov	_LCD_ShowNum_PARM_2,#0x07
-	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent2
-	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent2 + 1)
-	mov	_LCD_ShowNum_PARM_4,#0x03
-	mov	dpl,#0x02
-	lcall	_LCD_ShowNum
-;	Main.c:295: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
-	mov	_LCD_ShowString_PARM_3,#___str_8
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_8 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x0e
-	mov	dpl,#0x01
-	lcall	_LCD_ShowString
-	sjmp	00163$
-00159$:
-;	Main.c:299: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
-	mov	_LCD_ShowString_PARM_3,#___str_8
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_8 >> 8)
-	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
-	mov	_LCD_ShowString_PARM_2,#0x0e
-	mov	dpl,#0x01
-	lcall	_LCD_ShowString
-;	Main.c:301: PassWord_Ent = 0; // 清零密码
-	clr	a
-	mov	_PassWord_Ent,a
-	mov	(_PassWord_Ent + 1),a
-;	Main.c:302: PassWord_Ent1 = 0; // 清零密码
-	mov	_PassWord_Ent1,a
-	mov	(_PassWord_Ent1 + 1),a
-;	Main.c:303: PassWord_Ent2 = 0; // 清零密码
-	mov	_PassWord_Ent2,a
-	mov	(_PassWord_Ent2 + 1),a
-;	Main.c:304: LCD_ShowString(2,4,"000000");
-	mov	_LCD_ShowString_PARM_3,#___str_19
-	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_19 >> 8)
+	ljmp	00164$
+	ljmp	00165$
+	ljmp	00166$
+	ljmp	00167$
+	ljmp	00168$
+;	Main.c:295: case 0:LCD_ShowString(2,4,"000000");break;
+00162$:
+	mov	_LCD_ShowString_PARM_3,#___str_26
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_26 >> 8)
 	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
 	mov	_LCD_ShowString_PARM_2,#0x04
 	mov	dpl,#0x02
 	lcall	_LCD_ShowString
-;	Main.c:305: cont = 0; // 计数清零
-	clr	a
-	mov	_cont,a
-	mov	(_cont + 1),a
-;	Main.c:306: FLAG_F++;
-	inc	_FLAG_F
-;	genFromRTrack removed	clr	a
-	cjne	a,_FLAG_F,00354$
-	inc	(_FLAG_F + 1)
-00354$:
+;	Main.c:296: case 1:LCD_ShowString(2,4,"00000*");break;
+	sjmp	00171$
 00163$:
-;	Main.c:310: if(Num_Mat == 12)
-	mov	a,#0x0c
-	cjne	a,_Num_Mat,00165$
+	mov	_LCD_ShowString_PARM_3,#___str_27
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_27 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x04
+	mov	dpl,#0x02
+	lcall	_LCD_ShowString
+;	Main.c:297: case 2:LCD_ShowString(2,4,"0000**");break;
+	sjmp	00171$
+00164$:
+	mov	_LCD_ShowString_PARM_3,#___str_28
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_28 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x04
+	mov	dpl,#0x02
+	lcall	_LCD_ShowString
+;	Main.c:298: case 3:LCD_ShowString(2,4,"000***");break;
+	sjmp	00171$
+00165$:
+	mov	_LCD_ShowString_PARM_3,#___str_29
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_29 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x04
+	mov	dpl,#0x02
+	lcall	_LCD_ShowString
+;	Main.c:299: case 4:LCD_ShowString(2,4,"00****");break;
+	sjmp	00171$
+00166$:
+	mov	_LCD_ShowString_PARM_3,#___str_30
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_30 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x04
+	mov	dpl,#0x02
+	lcall	_LCD_ShowString
+;	Main.c:300: case 5:LCD_ShowString(2,4,"0*****");break;
+	sjmp	00171$
+00167$:
+	mov	_LCD_ShowString_PARM_3,#___str_31
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_31 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x04
+	mov	dpl,#0x02
+	lcall	_LCD_ShowString
+;	Main.c:301: case 6:LCD_ShowString(2,4,"******");break;
+	sjmp	00171$
+00168$:
+	mov	_LCD_ShowString_PARM_3,#___str_32
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_32 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x04
+	mov	dpl,#0x02
+	lcall	_LCD_ShowString
+;	Main.c:302: }
+00171$:
+;	Main.c:305: if(Num_Mat == 11)
+	mov	a,#0x0b
+	cjne	a,_Num_Mat,00421$
+	sjmp	00422$
+00421$:
+	ljmp	00180$
+00422$:
+;	Main.c:308: if(PassWord1 == PassWord_Ent1 && PassWord2 == PassWord_Ent2 && PassWord_Ent1 != 0 && PassWord_Ent2 != 0)
+	mov	a,_PassWord_Ent1
+	cjne	a,_PassWord1,00423$
+	mov	a,(_PassWord_Ent1 + 1)
+	cjne	a,(_PassWord1 + 1),00423$
+	sjmp	00424$
+00423$:
+	ljmp	00174$
+00424$:
+	mov	a,_PassWord_Ent2
+	cjne	a,_PassWord2,00174$
+	mov	a,(_PassWord_Ent2 + 1)
+	cjne	a,(_PassWord2 + 1),00174$
+	mov	a,_PassWord_Ent1
+	orl	a,(_PassWord_Ent1 + 1)
+	jz	00174$
+	mov	a,_PassWord_Ent2
+	orl	a,(_PassWord_Ent2 + 1)
+	jz	00174$
+;	Main.c:310: LCD_ShowString(1,14,"O"); // 在LCD上显示字符串
+	mov	_LCD_ShowString_PARM_3,#___str_33
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_33 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x0e
+	mov	dpl,#0x01
+	lcall	_LCD_ShowString
 ;	Main.c:312: cont = 0; // 计数清零
 	clr	a
 	mov	_cont,a
@@ -3014,58 +3082,142 @@ _main:
 ;	Main.c:315: PassWord_Ent2 = 0; // 清零密码
 	mov	_PassWord_Ent2,a
 	mov	(_PassWord_Ent2 + 1),a
-;	Main.c:316: LCD_ShowNum(2,4,PassWord_Ent1,3);
+;	Main.c:316: DelayS(2); // 延时2秒
+	mov	dptr,#0x0002
+	lcall	_DelayS
+;	Main.c:317: FLAG_D = 1; // 门状态标志位为1
+	mov	_FLAG_D,#0x01
+	mov	(_FLAG_D + 1),#0x00
+;	Main.c:318: LCD_ShowNum(2,4,PassWord_Ent1,3);
 	mov	_LCD_ShowNum_PARM_2,#0x04
-	mov	_LCD_ShowNum_PARM_3,a
-	mov	(_LCD_ShowNum_PARM_3 + 1),a
+	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent1
+	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent1 + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x03
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:317: LCD_ShowNum(2,7,PassWord_Ent2,3);// 在LCD上显示数字
+;	Main.c:319: LCD_ShowNum(2,7,PassWord_Ent2,3);
 	mov	_LCD_ShowNum_PARM_2,#0x07
 	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent2
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent2 + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x03
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-00165$:
-;	Main.c:319: if(FLAG_F >= 3)
+;	Main.c:320: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+	mov	_LCD_ShowString_PARM_3,#___str_24
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_24 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x0e
+	mov	dpl,#0x01
+	lcall	_LCD_ShowString
+	sjmp	00180$
+00174$:
+;	Main.c:324: LCD_ShowString(1,14,"C"); // 在LCD上显示字符串
+	mov	_LCD_ShowString_PARM_3,#___str_24
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_24 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x0e
+	mov	dpl,#0x01
+	lcall	_LCD_ShowString
+;	Main.c:326: PassWord_Ent = 0; // 清零密码
+	clr	a
+	mov	_PassWord_Ent,a
+	mov	(_PassWord_Ent + 1),a
+;	Main.c:327: PassWord_Ent1 = 0; // 清零密码
+	mov	_PassWord_Ent1,a
+	mov	(_PassWord_Ent1 + 1),a
+;	Main.c:328: PassWord_Ent2 = 0; // 清零密码
+	mov	_PassWord_Ent2,a
+	mov	(_PassWord_Ent2 + 1),a
+;	Main.c:329: LCD_ShowString(2,4,"000000");
+	mov	_LCD_ShowString_PARM_3,#___str_26
+	mov	(_LCD_ShowString_PARM_3 + 1),#(___str_26 >> 8)
+	mov	(_LCD_ShowString_PARM_3 + 2),#0x80
+	mov	_LCD_ShowString_PARM_2,#0x04
+	mov	dpl,#0x02
+	lcall	_LCD_ShowString
+;	Main.c:330: cont = 0; // 计数清零
+	clr	a
+	mov	_cont,a
+	mov	(_cont + 1),a
+;	Main.c:331: FLAG_F++;
+	inc	_FLAG_F
+;	genFromRTrack removed	clr	a
+	cjne	a,_FLAG_F,00429$
+	inc	(_FLAG_F + 1)
+00429$:
+00180$:
+;	Main.c:335: if(Num_Mat == 12)
+	mov	a,#0x0c
+	cjne	a,_Num_Mat,00184$
+;	Main.c:337: cont = 0; // 计数清零
+	clr	a
+	mov	_cont,a
+	mov	(_cont + 1),a
+;	Main.c:338: PassWord_Ent = 0; // 清零密码
+	mov	_PassWord_Ent,a
+	mov	(_PassWord_Ent + 1),a
+;	Main.c:339: PassWord_Ent1 = 0; // 清零密码
+	mov	_PassWord_Ent1,a
+	mov	(_PassWord_Ent1 + 1),a
+;	Main.c:340: PassWord_Ent2 = 0; // 清零密码
+	mov	_PassWord_Ent2,a
+	mov	(_PassWord_Ent2 + 1),a
+;	Main.c:341: LCD_ShowNum(2,4,PassWord_Ent1,3);
+	mov	_LCD_ShowNum_PARM_2,#0x04
+	mov	_LCD_ShowNum_PARM_3,a
+	mov	(_LCD_ShowNum_PARM_3 + 1),a
+	mov	_LCD_ShowNum_PARM_4,#0x03
+	mov	dpl,#0x02
+	lcall	_LCD_ShowNum
+;	Main.c:342: LCD_ShowNum(2,7,PassWord_Ent2,3);// 在LCD上显示数字
+	mov	_LCD_ShowNum_PARM_2,#0x07
+	mov	_LCD_ShowNum_PARM_3,_PassWord_Ent2
+	mov	(_LCD_ShowNum_PARM_3 + 1),(_PassWord_Ent2 + 1)
+	mov	_LCD_ShowNum_PARM_4,#0x03
+	mov	dpl,#0x02
+	lcall	_LCD_ShowNum
+00184$:
+;	Main.c:346: if(FLAG_F >= 5)
 	clr	c
 	mov	a,_FLAG_F
-	subb	a,#0x03
+	subb	a,#0x05
 	mov	a,(_FLAG_F + 1)
 	subb	a,#0x00
-	jc	00167$
-;	Main.c:321: DARGER = 0;
+	jc	00186$
+;	Main.c:348: DARGER = 0;
 ;	assignBit
 	clr	_P2_3
-;	Main.c:322: DelayMs(500);
+;	Main.c:349: DelayMs(500);
 	mov	dptr,#0x01f4
 	lcall	_DelayMs
-;	Main.c:323: DARGER = 1;
+;	Main.c:350: DARGER = 1;
 ;	assignBit
 	setb	_P2_3
-;	Main.c:324: FLAG_F = 0;
+;	Main.c:351: AT24C02_WriteByte(4,1); // 错误密码标志位为1
+	mov	_AT24C02_WriteByte_PARM_2,#0x01
+	mov	dpl,#0x04
+	lcall	_AT24C02_WriteByte
+;	Main.c:352: FLAG_F = 0;
 	clr	a
 	mov	_FLAG_F,a
 	mov	(_FLAG_F + 1),a
-00167$:
-;	Main.c:327: LCD_ShowNum(2,15,FLAG_F,2);
+00186$:
+;	Main.c:355: LCD_ShowNum(2,15,FLAG_F,2);
 	mov	_LCD_ShowNum_PARM_2,#0x0f
 	mov	_LCD_ShowNum_PARM_3,_FLAG_F
 	mov	(_LCD_ShowNum_PARM_3 + 1),(_FLAG_F + 1)
 	mov	_LCD_ShowNum_PARM_4,#0x02
 	mov	dpl,#0x02
 	lcall	_LCD_ShowNum
-;	Main.c:332: }
-	ljmp	00174$
+;	Main.c:360: }
+	ljmp	00193$
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'T0_Routine'
 ;------------------------------------------------------------
-;count                     Allocated with name '_T0_Routine_count_65536_162'
-;i                         Allocated with name '_T0_Routine_i_65536_162'
+;count                     Allocated with name '_T0_Routine_count_65536_170'
+;i                         Allocated with name '_T0_Routine_i_65536_170'
 ;------------------------------------------------------------
-;	Main.c:335: void T0_Routine() __interrupt 1
+;	Main.c:363: void T0_Routine() __interrupt 1
 ;	-----------------------------------------
 ;	 function T0_Routine
 ;	-----------------------------------------
@@ -3085,117 +3237,119 @@ _T0_Routine:
 	push	(0+0)
 	push	psw
 	mov	psw,#0x00
-;	Main.c:339: TH0 = 0xfc; // 设置定时器初值高8位
+;	Main.c:367: TH0 = 0xfc; // 设置定时器初值高8位
 	mov	_TH0,#0xfc
-;	Main.c:340: TL0 = 0x18; // 设置定时器初值低8位
+;	Main.c:368: TL0 = 0x18; // 设置定时器初值低8位
 	mov	_TL0,#0x18
-;	Main.c:341: count++; // 计数加一
-	inc	_T0_Routine_count_65536_162
+;	Main.c:369: count++; // 计数加一
+	inc	_T0_Routine_count_65536_170
 	clr	a
-	cjne	a,_T0_Routine_count_65536_162,00159$
-	inc	(_T0_Routine_count_65536_162 + 1)
+	cjne	a,_T0_Routine_count_65536_170,00159$
+	inc	(_T0_Routine_count_65536_170 + 1)
 00159$:
-;	Main.c:343: if(count == 100)
+;	Main.c:371: if(count == 100)
 	mov	a,#0x64
-	cjne	a,_T0_Routine_count_65536_162,00160$
+	cjne	a,_T0_Routine_count_65536_170,00160$
 	clr	a
-	cjne	a,(_T0_Routine_count_65536_162 + 1),00160$
+	cjne	a,(_T0_Routine_count_65536_170 + 1),00160$
 	sjmp	00161$
 00160$:
 	ljmp	00117$
 00161$:
-;	Main.c:346: if(P3_4 == 0 && P3_5 == 0)
+;	Main.c:374: if(P3_4 == 0 && P3_5 == 0)
 	jb	_P3_4,00105$
 	jb	_P3_5,00105$
-;	Main.c:349: if(P3_4 == 0 && P3_5 == 0)
+;	Main.c:377: if(P3_4 == 0 && P3_5 == 0)
 	jb	_P3_4,00105$
 	jb	_P3_5,00105$
-;	Main.c:351: DelayS(1); // 延时1秒
-	mov	dptr,#0x0001
+;	Main.c:379: DelayS(2); // 延时1秒
+	mov	dptr,#0x0002
 	lcall	_DelayS
-;	Main.c:352: K1++; // K1计数加一
+;	Main.c:380: K1++; // K1计数加一
 	inc	_K1
 	clr	a
 	cjne	a,_K1,00166$
 	inc	(_K1 + 1)
 00166$:
 00105$:
-;	Main.c:355: if(FLAG_D)
+;	Main.c:383: if(FLAG_D)
 	mov	a,_FLAG_D
 	orl	a,(_FLAG_D + 1)
 	jnz	00167$
 	ljmp	00110$
 00167$:
-;	Main.c:357: for(i=0;i<150;i++)
-	mov	_T0_Routine_i_65536_162,#0x00
+;	Main.c:385: for(i=0;i<150;i++)
+	mov	_T0_Routine_i_65536_170,#0x00
 00113$:
-;	Main.c:359: P3 = 0x80;
+;	Main.c:387: P3 = 0x80;
 	mov	_P3,#0x80
-;	Main.c:360: DelayMs(3);
+;	Main.c:388: DelayMs(3);
 	mov	dptr,#0x0003
 	lcall	_DelayMs
-;	Main.c:361: P3 = 0x40;
+;	Main.c:389: P3 = 0x40;
 	mov	_P3,#0x40
-;	Main.c:362: DelayMs(3);
+;	Main.c:390: DelayMs(3);
 	mov	dptr,#0x0003
 	lcall	_DelayMs
-;	Main.c:363: P3 = 0x20;
+;	Main.c:391: P3 = 0x20;
 	mov	_P3,#0x20
-;	Main.c:364: DelayMs(3);
+;	Main.c:392: DelayMs(3);
 	mov	dptr,#0x0003
 	lcall	_DelayMs
-;	Main.c:365: P3 = 0x10;
+;	Main.c:393: P3 = 0x10;
 	mov	_P3,#0x10
-;	Main.c:366: DelayMs(3);
+;	Main.c:394: DelayMs(3);
 	mov	dptr,#0x0003
 	lcall	_DelayMs
-;	Main.c:357: for(i=0;i<150;i++)
-	inc	_T0_Routine_i_65536_162
+;	Main.c:385: for(i=0;i<150;i++)
+	inc	_T0_Routine_i_65536_170
 	mov	a,#0x100 - 0x96
-	add	a,_T0_Routine_i_65536_162
+	add	a,_T0_Routine_i_65536_170
 	jnc	00113$
-;	Main.c:368: DelayS(2);
+;	Main.c:396: DelayS(2);
 	mov	dptr,#0x0002
 	lcall	_DelayS
-;	Main.c:369: for(i=0;i<130;i++)
-	mov	_T0_Routine_i_65536_162,#0x00
+;	Main.c:397: for(i=0;i<130;i++)
+	mov	_T0_Routine_i_65536_170,#0x00
 00115$:
-;	Main.c:371: P3 = 0x10;
+;	Main.c:399: P3 = 0x10;
 	mov	_P3,#0x10
-;	Main.c:372: DelayMs(3);
+;	Main.c:400: DelayMs(3);
 	mov	dptr,#0x0003
 	lcall	_DelayMs
-;	Main.c:373: P3 = 0x20;
+;	Main.c:401: P3 = 0x20;
 	mov	_P3,#0x20
-;	Main.c:374: DelayMs(3);
+;	Main.c:402: DelayMs(3);
 	mov	dptr,#0x0003
 	lcall	_DelayMs
-;	Main.c:375: P3 = 0x40;
+;	Main.c:403: P3 = 0x40;
 	mov	_P3,#0x40
-;	Main.c:376: DelayMs(3);
+;	Main.c:404: DelayMs(3);
 	mov	dptr,#0x0003
 	lcall	_DelayMs
-;	Main.c:377: P3 = 0x80;
+;	Main.c:405: P3 = 0x80;
 	mov	_P3,#0x80
-;	Main.c:378: DelayMs(3);
+;	Main.c:406: DelayMs(3);
 	mov	dptr,#0x0003
 	lcall	_DelayMs
-;	Main.c:369: for(i=0;i<130;i++)
-	inc	_T0_Routine_i_65536_162
+;	Main.c:397: for(i=0;i<130;i++)
+	inc	_T0_Routine_i_65536_170
 	mov	a,#0x100 - 0x82
-	add	a,_T0_Routine_i_65536_162
+	add	a,_T0_Routine_i_65536_170
 	jnc	00115$
-;	Main.c:380: FLAG_D = 0;
+;	Main.c:408: P3 = 0xff;
+	mov	_P3,#0xff
+;	Main.c:409: FLAG_D = 0;
 	clr	a
 	mov	_FLAG_D,a
 	mov	(_FLAG_D + 1),a
 00110$:
-;	Main.c:382: count = 0; // 计数清零
+;	Main.c:411: count = 0; // 计数清零
 	clr	a
-	mov	_T0_Routine_count_65536_162,a
-	mov	(_T0_Routine_count_65536_162 + 1),a
+	mov	_T0_Routine_count_65536_170,a
+	mov	(_T0_Routine_count_65536_170 + 1),a
 00117$:
-;	Main.c:384: }
+;	Main.c:413: }
 	pop	psw
 	pop	(0+0)
 	pop	(0+1)
@@ -3250,97 +3404,137 @@ ___str_6:
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_7:
-	.ascii "DOOR:"
+	.ascii "     "
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_8:
-	.ascii "C"
+	.ascii " "
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_9:
-	.ascii "MODE:M"
+	.ascii "  "
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_10:
-	.ascii "00000"
+	.ascii "MODE:M"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_11:
-	.ascii "0000*"
+	.ascii "00000"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_12:
-	.ascii "000**"
+	.ascii "0000*"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_13:
-	.ascii "00***"
+	.ascii "000**"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_14:
-	.ascii "0****"
+	.ascii "00***"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_15:
-	.ascii "*****"
+	.ascii "0****"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_16:
-	.ascii "O"
+	.ascii "*****"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_17:
-	.ascii "PasswordDel OK"
+	.ascii "DEL PD"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_18:
-	.ascii "MODE:E"
+	.ascii "RES PD"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_19:
-	.ascii "000000"
+	.ascii "OPE DR"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_20:
-	.ascii "00000*"
+	.ascii "PdDel OK"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_21:
-	.ascii "0000**"
+	.ascii "RESET OK"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_22:
-	.ascii "000***"
+	.ascii "DOOR:"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_23:
-	.ascii "00****"
+	.ascii "O "
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_24:
-	.ascii "0*****"
+	.ascii "C"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_25:
+	.ascii "MODE:E"
+	.db 0x00
+	.area CSEG    (CODE)
+	.area CONST   (CODE)
+___str_26:
+	.ascii "000000"
+	.db 0x00
+	.area CSEG    (CODE)
+	.area CONST   (CODE)
+___str_27:
+	.ascii "00000*"
+	.db 0x00
+	.area CSEG    (CODE)
+	.area CONST   (CODE)
+___str_28:
+	.ascii "0000**"
+	.db 0x00
+	.area CSEG    (CODE)
+	.area CONST   (CODE)
+___str_29:
+	.ascii "000***"
+	.db 0x00
+	.area CSEG    (CODE)
+	.area CONST   (CODE)
+___str_30:
+	.ascii "00****"
+	.db 0x00
+	.area CSEG    (CODE)
+	.area CONST   (CODE)
+___str_31:
+	.ascii "0*****"
+	.db 0x00
+	.area CSEG    (CODE)
+	.area CONST   (CODE)
+___str_32:
 	.ascii "******"
+	.db 0x00
+	.area CSEG    (CODE)
+	.area CONST   (CODE)
+___str_33:
+	.ascii "O"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area XINIT   (CODE)
